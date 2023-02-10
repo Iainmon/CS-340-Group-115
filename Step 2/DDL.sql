@@ -85,9 +85,9 @@ create or replace table prescription_status (
 
 lock tables pharmacists write;
 lock tables customers write;
-lock medications write;
-lock prescriptions write;
-lock prescription_status write;
+lock tables medications write;
+lock tables prescriptions write;
+lock tables prescription_status write;
 
 -- Insert data into pharmacists table
 
