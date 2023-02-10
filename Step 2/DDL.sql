@@ -83,7 +83,11 @@ create or replace table prescription_status (
 
 -- Insert data
 
-lock tables pharmacists write, customers write, medications write, prescriptions write, prescription_status write;
+lock tables pharmacists write;
+lock tables customers write;
+lock medications write;
+lock prescriptions write;
+lock prescription_status write;
 
 -- Insert data into pharmacists table
 
@@ -169,6 +173,7 @@ insert into prescription_status (prescription_id, pharmacist_id, status) values
  'filled');
 
 
+unlock tables;
 
 SET FOREIGN_KEY_CHECKS=1;
 COMMIT;
