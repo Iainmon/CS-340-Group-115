@@ -74,9 +74,9 @@ create or replace table prescription_status (
     prescription_id int(11) not null,
     pharmacist_id int(11) not null,
     status varchar(255) not null,
-    update_date datetime not null,
-    primary key (prescription_id, pharmacist_id),
-    key prescription_id (prescription_id),
+    update_date timestamp not null default CURRENT_TIMESTAMP,
+    primary key (prescription_id, update_date),
+    -- key prescription_id (prescription_id),
     foreign key (prescription_id) references prescriptions(prescription_id),
     foreign key (pharmacist_id) references pharmacists(pharmacist_id)
 );
