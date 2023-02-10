@@ -104,7 +104,8 @@ values
     ('Emily', 'Brown', '333 Oak St', '555-555-1217'),
     ('William', 'Jones', '444 Main St', '555-555-1218'),
     ('Ashley', 'Miller', '555 Elm St', '555-555-1219'),
-    ('David', 'Davis', '666 Oak St', '555-555-1220');
+    ('David', 'Davis', '666 Oak St', '555-555-1220'),
+    ('Bob', 'Johnson', '420 Balze St', '555-555-2222');
 
 
 -- Insert data into medications table
@@ -129,29 +130,35 @@ values
      (select medication_id from medications where name='Amoxicillin'), 3, 2, 14),
     ((select customer_id from customers where first_name='Emily' and last_name='Brown'), 
      (select medication_id from medications where name='Ibuprofen'), 1, 5, 30),
-    ((select customer_id from customers where first_name = 'John' and last_name = 'Smith'),
-     (select medication_id from medications where name = 'Paracetamol'), 500, 2, 30),
-    ((select customer_id from customers where first_name = 'Jane' and last_name = 'Doe'),
+    ((select customer_id from customers where first_name = 'William' and last_name = 'Jones'),
+     (select medication_id from medications where name = 'Penicillin'), 500, 2, 30),
+    ((select customer_id from customers where first_name = 'Ashley' and last_name = 'Miller'),
      (select medication_id from medications where name = 'Ibuprofen'), 600, 3, 45),
-    ((select customer_id from customers where first_name = 'Bob' and last_name = 'Johnson'),
+    ((select customer_id from customers where first_name = 'David' and last_name = 'Davis'),
      (select medication_id from medications where name = 'Amoxicillin'), 250, 0, 0),
-    ((select customer_id from customers where first_name = 'Jane' and last_name = 'Doe'),
-     (select medication_id from medications where name = 'Hydrocodone'), 5, 1, 60);
+    ((select customer_id from customers where first_name = 'Bob' and last_name = 'Johnson'),
+     (select medication_id from medications where name = 'Acetaminophen'), 5, 1, 60);
 
 -- Populating prescription_status table
 
 insert into prescription_status (prescription_id, pharmacist_id, status) values
-((select prescription_id from prescriptions where customer_id = (select customer_id from customers where first_name = 'John' and last_name = 'Smith')),
+((select prescription_id from prescriptions where customer_id = (select customer_id from customers where first_name = 'Bob' and last_name = 'Johnson')),
  (select pharmacist_id from pharmacists where first_name = 'John' and last_name = 'Doe'),
  'filled'),
-((select prescription_id from prescriptions where customer_id = (select customer_id from customers where first_name = 'Jane' and last_name = 'Doe') and medication_id = (select medication_id from medications where name = 'Ibuprofen')),
+((select prescription_id from prescriptions where customer_id = (select customer_id from customers where first_name = 'Emily' and last_name = 'Brown') and medication_id = (select medication_id from medications where name = 'Ibuprofen')),
  (select pharmacist_id from pharmacists where first_name = 'Jane' and last_name = 'Doe'),
- 'filled'),
-((select prescription_id from prescriptions where customer_id = (select customer_id from customers where first_name = 'Bob' and last_name = 'Johnson')),
- (select pharmacist_id from pharmacists where first_name = 'Mark' and last_name = 'Johnson'),
+ 'waiting_pickup'),
+((select prescription_id from prescriptions where customer_id = (select customer_id from customers where first_name = 'Ashley' and last_name = 'Miller')),
+ (select pharmacist_id from pharmacists where first_name = 'Jim' and last_name = 'Smith'),
  'pending'),
-((select prescription_id from prescriptions where customer_id = (select customer_id from customers where first_name = 'Jane' and last_name = 'Doe') and medication_id = (select medication_id from medications where name = 'Hydrocodone')),
- (select pharmacist_id from pharmacists where first_name = 'Mark' and last_name = 'Johnson'),
+((select prescription_id from prescriptions where customer_id = (select customer_id from customers where first_name = 'Michael' and last_name = 'Smith') and medication_id = (select medication_id from medications where name = 'Acetaminophen')),
+ (select pharmacist_id from pharmacists where first_name = 'James' and last_name = 'Johnson'),
+ 'filled'),
+ ((select prescription_id from prescriptions where customer_id = (select customer_id from customers where first_name = 'Michael' and last_name = 'Smith') and medication_id = (select medication_id from medications where name = 'Acetaminophen')),
+ (select pharmacist_id from pharmacists where first_name = 'Jane' and last_name = 'Doe'),
+ 'dropped_off'),
+ ((select prescription_id from prescriptions where customer_id = (select customer_id from customers where first_name = 'Bob' and last_name = 'Johnson') and medication_id = (select medication_id from medications where name = 'Ibuprofen')),
+ (select pharmacist_id from pharmacists where first_name = 'James' and last_name = 'Johnson'),
  'filled');
 
 
