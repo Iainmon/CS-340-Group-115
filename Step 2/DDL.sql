@@ -7,7 +7,7 @@ SET AUTOCOMMIT = 0;
 drop table if exists pharmacists;
 
 create or replace table pharmacists (
-    pharmacist_id int(11) not null AUTO_INCREMENT,
+    pharmacist_id int(11) not null unique AUTO_INCREMENT,
     job_title varchar(255),
     first_name varchar(255) not null,
     last_name varchar(255) not null,
@@ -24,7 +24,7 @@ create or replace table pharmacists (
 drop table if exists customers;
 
 create or replace table customers (
-    customer_id int(11) not null AUTO_INCREMENT,
+    customer_id int(11) not null unique AUTO_INCREMENT,
     first_name varchar(255) not null,
     last_name varchar(255) not null,
     address varchar(255),
@@ -39,7 +39,7 @@ create or replace table customers (
 drop table if exists medications;
 
 create or replace table medications (
-    medication_id int(11) not null AUTO_INCREMENT,
+    medication_id int(11) not null unique AUTO_INCREMENT,
     name varchar(255) not null,
     description varchar(255),
     quantity varchar(255) not null,                   -- Ex: 100mg, 1 tablet, 1 bottle
@@ -54,7 +54,7 @@ create or replace table medications (
 drop table if exists prescriptions;
 
 create or replace table perscriptions (
-    perscription_id int(11) not null AUTO_INCREMENT,
+    perscription_id int(11) not null unique AUTO_INCREMENT,
     customer_id int(11) not null,
     medication_id int(11) not null,
     dosage decimal(4,2) not null,
@@ -76,6 +76,7 @@ create or replace table perscription_status (
     status varchar(255) not null,
     update_date datetime not null,
     primary key (perscription_id, pharmacist_id),
+    key perscription_id (perscription_id),
     foreign key (perscription_id) references perscriptions(perscription_id),
     foreign key (pharmacist_id) references pharmacists(pharmacist_id)
 );
