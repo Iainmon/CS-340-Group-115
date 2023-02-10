@@ -151,13 +151,13 @@ insert into prescription_status (prescription_id, pharmacist_id, status) values
 ((select prescription_id from prescriptions where customer_id = (select customer_id from customers where first_name = 'Ashley' and last_name = 'Miller')),
  (select pharmacist_id from pharmacists where first_name = 'Jim' and last_name = 'Smith'),
  'pending'),
-((select prescription_id from prescriptions where customer_id = (select customer_id from customers where first_name = 'Michael' and last_name = 'Smith') and medication_id = (select medication_id from medications where name = 'Acetaminophen')),
+((select prescription_id from prescriptions where customer_id = (select customer_id from customers where first_name = 'Michael' and last_name = 'Smith') and medication_id = (select medication_id from medications where name = 'Amoxicillin')),
  (select pharmacist_id from pharmacists where first_name = 'James' and last_name = 'Johnson'),
  'filled'),
- ((select prescription_id from prescriptions where customer_id = (select customer_id from customers where first_name = 'Michael' and last_name = 'Smith') and medication_id = (select medication_id from medications where name = 'Acetaminophen')),
+ ((select prescription_id from prescriptions where customer_id = (select customer_id from customers where first_name = 'Michael' and last_name = 'Smith') and medication_id = (select medication_id from medications where name = 'Amoxicillin')),
  (select pharmacist_id from pharmacists where first_name = 'Jane' and last_name = 'Doe'),
  'dropped_off'),
- ((select prescription_id from prescriptions where customer_id = (select customer_id from customers where first_name = 'Bob' and last_name = 'Johnson') and medication_id = (select medication_id from medications where name = 'Ibuprofen')),
+ ((select prescription_id from prescriptions where customer_id = (select customer_id from customers where first_name = 'Bob' and last_name = 'Johnson') and medication_id = (select medication_id from medications where name = 'Acetaminophen')),
  (select pharmacist_id from pharmacists where first_name = 'James' and last_name = 'Johnson'),
  'filled');
 
