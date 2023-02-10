@@ -61,8 +61,8 @@ create or replace table prescriptions (
     refil_count int,
     refil_frequency int,
     primary key (prescription_id),
-    foreign key (customer_id) references customers(customer_id),
-    foreign key (medication_id) references medications(medication_id)
+    constraint customer_id_fk foreign key (customer_id) references customers(customer_id),
+    constraint medication_id_fk foreign key (medication_id) references medications(medication_id)
 );
 
 
@@ -76,8 +76,8 @@ create or replace table prescription_status (
     status varchar(255) not null,
     update_date timestamp not null default CURRENT_TIMESTAMP,
     -- primary key (prescription_id, update_date),
-    foreign key (prescription_id) references prescriptions(prescription_id),
-    foreign key (pharmacist_id) references pharmacists(pharmacist_id)
+    constraint perscription_id_fk foreign key (prescription_id) references prescriptions(prescription_id),
+    constraint pharmacist_id_fk foreign key (pharmacist_id) references pharmacists(pharmacist_id)
 );
 
 
@@ -129,26 +129,14 @@ values
      (select medication_id from medications where name='Amoxicillin'), 3, 2, 14),
     ((select customer_id from customers where first_name='Emily' and last_name='Brown'), 
      (select medication_id from medications where name='Ibuprofen'), 1, 5, 30),
-((select customer_id from customers where first_name = 'John' and last_name = 'Smith'),
- (select medication_id from medications where name = 'Paracetamol'),
- 500,
- 2,
- 30),
-((select customer_id from customers where first_name = 'Jane' and last_name = 'Doe'),
- (select medication_id from medications where name = 'Ibuprofen'),
- 600,
- 3,
- 45),
-((select customer_id from customers where first_name = 'Bob' and last_name = 'Johnson'),
- (select medication_id from medications where name = 'Amoxicillin'),
- 250,
- 0,
- 0),
-((select customer_id from customers where first_name = 'Jane' and last_name = 'Doe'),
- (select medication_id from medications where name = 'Hydrocodone'),
- 5,
- 1,
- 60);
+    ((select customer_id from customers where first_name = 'John' and last_name = 'Smith'),
+     (select medication_id from medications where name = 'Paracetamol'), 500, 2, 30),
+    ((select customer_id from customers where first_name = 'Jane' and last_name = 'Doe'),
+     (select medication_id from medications where name = 'Ibuprofen'), 600, 3, 45),
+    ((select customer_id from customers where first_name = 'Bob' and last_name = 'Johnson'),
+     (select medication_id from medications where name = 'Amoxicillin'), 250, 0, 0),
+    ((select customer_id from customers where first_name = 'Jane' and last_name = 'Doe'),
+     (select medication_id from medications where name = 'Hydrocodone'), 5, 1, 60);
 
 -- Populating prescription_status table
 
