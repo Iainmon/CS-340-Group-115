@@ -49,35 +49,35 @@ create or replace table medications (
 );
 
 
--- Create perscriptions table
+-- Create prescriptions table
 
 drop table if exists prescriptions;
 
-create or replace table perscriptions (
-    perscription_id int(11) not null unique AUTO_INCREMENT,
+create or replace table prescriptions (
+    prescription_id int(11) not null unique AUTO_INCREMENT,
     customer_id int(11) not null,
     medication_id int(11) not null,
     dosage decimal(4,2) not null,
     refil_count int,
     refil_frequency int,
-    primary key (perscription_id),
+    primary key (prescription_id),
     foreign key (customer_id) references customers(customer_id),
     foreign key (medication_id) references medications(medication_id)
 );
 
 
--- Create perscription_status table
+-- Create prescription_status table
 
-drop table if exists perscription_status;
+drop table if exists prescription_status;
 
-create or replace table perscription_status (
-    perscription_id int(11) not null,
+create or replace table prescription_status (
+    prescription_id int(11) not null,
     pharmacist_id int(11) not null,
     status varchar(255) not null,
     update_date datetime not null,
-    primary key (perscription_id, pharmacist_id),
-    key perscription_id (perscription_id),
-    foreign key (perscription_id) references perscriptions(perscription_id),
+    primary key (prescription_id, pharmacist_id),
+    key prescription_id (prescription_id),
+    foreign key (prescription_id) references prescriptions(prescription_id),
     foreign key (pharmacist_id) references pharmacists(pharmacist_id)
 );
 
