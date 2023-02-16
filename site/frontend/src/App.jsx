@@ -40,18 +40,63 @@ export function App (props) {
         // console.log(table);
         console.table(table);
     }
+
+    const [activePage, setActivePage] = useState('home');
+
+    const homePage = (
+      <div className="container home">
+        <h1 className="display-3">Welcome to the Pharmacy Database</h1>
+        <p className="lead">This is a database for a pharmacy. It contains information about pharmacists, customers, prescriptions, and medications.</p>
+        <p className="lead">You can view the data in the database by clicking on the links in the navigation bar above.</p>
+        <hr></hr>
+        <p className="lead">The <b>Pharmacists</b> page shows a list of pharmacists, for which you can add, edit, and delete pharmacists.</p>
+        <p className="lead">The <b>Customers</b> page shows a list of customers and their information. You can add and update customer information, but you may not delete a customer because they are medical records.</p>
+        <p className="lead">The <b>Prescriptions</b> page shows a list of all prescriptions and their statuses. You can change information for a prescription and update its status.</p>
+        <p className="lead">The <b>Medications</b> page shows a list of medications which you can edit and add new medications.</p>
+        <p className="lead">The <b>Prescription Status</b> page shows a list of prescription statuses.</p>
+      </div>
+    )
     
     return (
         <div className="container App">
-            <BasicExample />
+            {/* <BasicExample /> */}
             <h1 className="text-center display-1">Pharmacy Database</h1>
+            <Nav
+              activeKey={activePage}
+              onSelect={setActivePage}>
+              <Nav.Item>
+                <Nav.Link eventKey="home">Home</Nav.Link>
+              </Nav.Item>
+              <Nav.Item>
+                <Nav.Link eventKey="pharmacists">Pharmacists</Nav.Link>
+              </Nav.Item>
+              <Nav.Item>
+                <Nav.Link eventKey="customers">Customers</Nav.Link>
+              </Nav.Item>
+              <Nav.Item>
+                <Nav.Link eventKey="prescriptions">Prescriptions</Nav.Link>
+              </Nav.Item>
+              <Nav.Item>
+                <Nav.Link eventKey="medications">Medications</Nav.Link>
+              </Nav.Item>
+              <Nav.Item>
+                <Nav.Link eventKey="prescription_status">Prescription Status</Nav.Link>
+              </Nav.Item>
+            </Nav>
             <hr></hr>
             <div className="p-5" >
-                <PharmacistView records={tables['pharmacists']} />
+                { activePage === 'home' ? homePage : null}
+                { activePage === 'pharmacists' ? <PharmacistView records={tables['pharmacists']} /> : null }
+                { activePage === 'customers' ? <CustomerView records={tables['customers']} /> : null }
+                { activePage === 'prescriptions' ? <PrescriptionView records={tables['prescriptions']} /> : null }
+                { activePage === 'medications' ? <MedicationView records={tables['medications']} /> : null }
+                { activePage === 'prescription_status' ? <PrescriptionStatusView records={tables['prescription_status']} /> : null }
+
+                {/* <PharmacistView records={tables['pharmacists']} />
                 <CustomerView records={tables['customers']} />
                 <PrescriptionView records={tables['prescriptions']} />
                 <MedicationView records={tables['medications']} />
-                <PrescriptionStatusView records={tables['prescription_status']} />
+                <PrescriptionStatusView records={tables['prescription_status']} /> */}
             </div>
         </div>);
 

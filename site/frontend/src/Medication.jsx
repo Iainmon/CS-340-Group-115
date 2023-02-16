@@ -117,7 +117,7 @@ export class MedicationView extends React.Component {
     render() {
         return (
             <div className="view">
-                <h1>Medications</h1>
+                <h1 className="display-3">Medications</h1>
                 <MedicationTable records={this.props.records} onEdit={record => this.handleEdit(record)} onAdd={() => this.setState({addPrompt: true, activeEditRecord: null})} />
                 {this.state.activeEditRecord === null ? null : <EditMedication record={this.state.activeEditRecord} onChange={x => this.setState({ activeEditRecord : x})} />}
                 {this.state.addPrompt ? <CreateMedication /> : null}
