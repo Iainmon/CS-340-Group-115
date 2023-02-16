@@ -47,4 +47,7 @@ from prescription_status ps left join pharmacists ph on ps.pharmacist_id = ph.ph
 order by ps.update_date desc;
 
 
+-- insert into prescription_status (prescription_id, pharmacist_id, status)
+
+
 

@@ -8,12 +8,14 @@ export class ForeignKeySelect extends React.Component {
         this.rows = this.tables[props.tableName];
         this.searchKeyFunc = props.searchKeyFunc;
         this.foreignKey = props.foreignKey;
-        this.state = { value: 'null' };
+        this.state = { value: props.value }// !props.value ? 'null' : props.value };
+        this.value = props.value
     }
     render() {
         return (
-            <select className="form-control" value={this.state.value} onChange={this.props.onChange}>
-                <option value={null}>- select option -</option>
+            <select className="form-control" value={this.props.value} onChange={(e) => {this.props.onChange(e); this.value = e.target.value}}>
+            {/*<select className="form-control" value={this.state.value} onChange={(e) => {this.props.onChange(e); this.setState({value:e.target.value})}}>*/}
+                <option value="null">- select option -</option>
                 {this.rows.map(row => <option value={row[this.foreignKey]}>{this.searchKeyFunc(row)}</option>)}
             </select>
         );

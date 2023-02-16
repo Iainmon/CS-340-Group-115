@@ -31,14 +31,14 @@ export function SelectionRow({title, value, pairs, onChange}) {
     );
 }
 
-export function ForeignKeySelectionRow({title, tableName, searchKeyFunc, foreignKey, onChange}) {
+export function ForeignKeySelectionRow({title, value, tableName, searchKeyFunc, foreignKey, onChange}) {
     return (
         <div className="row align-items-centercol-auto">
             <div className="col-3">
                 <label className="col-form-label">{title}</label>
             </div>
             <div className="col">
-                <ForeignKeySelect tables={tables} tableName={tableName} searchKeyFunc={searchKeyFunc} foreignKey={foreignKey} onChange={onChange} />
+                <ForeignKeySelect tables={tables} value={value} tableName={tableName} searchKeyFunc={searchKeyFunc} foreignKey={foreignKey} onChange={onChange} />
             </div>
         </div>
     );

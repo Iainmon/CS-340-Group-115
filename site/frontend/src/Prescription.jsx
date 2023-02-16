@@ -87,6 +87,8 @@ function EditPrescription(props) {
     if (props.record === null) {
         return (<b>Please select a prescription to edit!</b>);
     }
+    const [pharmacist, setPharmacist] = useState(props.record['pharmacist_id'] | null);
+    console.log(pharmacist);
     return (
         <form onSubmit={() => true}>
             <fieldset>
@@ -95,6 +97,14 @@ function EditPrescription(props) {
                 <InputRow title="Refill Count" value={props.record['refill_count']} onChange={e => props.onChange({...props.record, 'refill_count': e.target.value})} />
                 <InputRow title="Refill Frequency" value={props.record['refill_frequency']} onChange={e => props.onChange({...props.record, 'refill_frequency': e.target.value})} />
                 <SelectionRow title="Status" value={getStatus(props.record)['status']} onChange={e => props.onChange({...props.record, 'status': props.record['status'] + [{'status':e.target.value,'update_date':getStatus(props.record)['update_date']}]})} pairs={statusOptions} />
+                <ForeignKeySelectionRow
+                    title="Pharmacist" 
+                    value={pharmacist}
+                    tableName="pharmacists"
+                    searchKeyFunc={row => row['first_name'] + ' ' + row['last_name']}
+                    foreignKey="pharmacist_id"
+                    onChange={e => {console.log(e.target.value);setPharmacist(e.target.value)}} />
+
             </fieldset>
             <input type="submit" value="Submit" />
         </form>
