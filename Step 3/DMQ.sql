@@ -35,7 +35,7 @@ join medications m on p.medication_id = m.medication_id
 group by p.prescription_id;
 
 
-
+-- Populating prescription_status list
 
 select 
     ps.prescription_id,
@@ -47,7 +47,87 @@ from prescription_status ps left join pharmacists ph on ps.pharmacist_id = ph.ph
 order by ps.update_date desc;
 
 
--- insert into prescription_status (prescription_id, pharmacist_id, status)
 
 
+
+-- Creating pharmacist
+insert into pharmacists (first_name, last_name, job_title, address, phone_number)
+values (:first_name, :last_name, :job_title, :address, :phone_number);
+
+-- Creating customer
+insert into customers (first_name, last_name, address, phone_number)
+values (:first_name, :last_name, :address, :phone_number);
+
+-- Creating prescription
+insert into prescriptions (customer_id, medication_id, dosage, refill_count, refill_frequency)
+values (:customer_id, :medication_id, :dosage, :refill_count, :refill_frequency);
+
+
+-- Creating medication
+insert into medications (name, description, quantity, stock, drug_class)
+values (:name, :description, :quantity, :stock, :drug_class);
+
+
+
+
+-- Updating pharmacist
+update pharmacists set
+    first_name = :first_name,
+    last_name = :last_name,
+    job_title = :job_title,
+    address = :address,
+    phone_number = :phone_number
+where pharmacist_id = :pharmacist_id;
+
+
+-- Updating customer
+update customers set
+    first_name = :first_name,
+    last_name = :last_name,
+    address = :address,
+    phone_number = :phone_number
+where customer_id = :customer_id;
+
+
+-- Updating prescription
+update prescriptions set
+    dosage = :dosage,
+    refill_count = :refill_count,
+    refill_frequency = :refill_frequency
+where prescription_id = :prescription_id;
+
+-- Updating (creating) prescription_status (will be run with above, if status is changed)
+insert into prescription_status (prescription_id, pharmacist_id, status)
+values (:prescription_id, :pharmacist_id, :status);
+
+
+-- Updating medication
+update medications set
+    name = :name,
+    description = :description,
+    quantity = :quantity,
+    stock = :stock,
+    drug_class = :drug_class
+where medication_id = :medication_id;
+
+
+
+-- Deleting pharmacist
+update prescription_status set
+    pharmacist_id = null
+where pharmacist_id = :pharmacist_id;
+delete from pharmacists where pharmacist_id = :pharmacist_id;
+
+
+
+
+
+-- Get pharmacists for dropdown menu
+select pharmacist_id, CONCAT(first_name, ' ', last_name) as name from pharmacists;
+
+-- Get customers for dropdown menu
+select customer_id, CONCAT(first_name, ' ', last_name) as name from customers;
+
+-- Get medications for dropdown menu
+select medication_id, CONCAT(name, ' ', quantity) from medications;
 

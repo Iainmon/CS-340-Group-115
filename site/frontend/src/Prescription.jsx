@@ -133,11 +133,11 @@ function CreatePrescription(props) {
                 <ForeignKeySelectionRow
                     title="Medication"
                     tableName="medications"
-                    searchKeyFunc={row => row['name']}
+                    searchKeyFunc={row => row['name'] + ' ' + row['quantity']}
                     foreignKey="medication_id"
                     onChange={e => console.log(e.target.value)} />
 
-                <SelectionRow title="Status" value={status} onChange={e => setStatus(e.target.value)} pairs={statusOptions} />
+                {/* <SelectionRow title="Status" value={status} onChange={e => setStatus(e.target.value)} pairs={statusOptions} /> */}
 
                 {/* <InputRow title="Customer ID" value={customerId} onChange={e => setCustomerId(e.target.value)} /> */}
                 {/* <InputRow title="Medication ID" value={medicationId} onChange={e => setMedicationId(e.target.value)} /> */}
