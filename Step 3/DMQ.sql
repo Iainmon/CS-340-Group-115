@@ -19,8 +19,8 @@ select
     customer.last_name as customer_last_name,
     medication.name as medication_name,
     prescription.dosage,
-    prescription.refil_count,
-    prescription.refil_frequency
+    prescription.refill_count,
+    prescription.refill_frequency
 from prescription 
     inner join prescription_status on prescription.prescription_id = prescription_status.prescription_id
     inner join customer on prescription.customer_id = customer.customer_id

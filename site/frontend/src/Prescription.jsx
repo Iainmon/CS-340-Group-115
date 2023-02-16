@@ -9,7 +9,15 @@ const statusOptions = {
     'filled': 'Filled',
     'ready_for_pickup': 'Ready for Pickup',
     'picked_up': 'Picked Up',
+    'waiting_for_pickup': 'Awaiting Pickup',
 };
+
+function formatStatus(status) {
+    if (statusOptions[status] === undefined || status === 'NULL') {
+        return 'NULL';
+    }
+    return statusOptions[status];
+}
 
 const getStatus = record => record['status'].length > 0 ? record['status'][record['status'].length - 1] : {'status':'NULL', 'update_date':'----'};
 

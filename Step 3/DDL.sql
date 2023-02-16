@@ -62,8 +62,8 @@ create or replace table prescriptions (
     customer_id int(11) not null,
     medication_id int(11) not null,
     dosage decimal(4,2) not null,
-    refil_count int,
-    refil_frequency int,
+    refill_count int,
+    refill_frequency int,
     primary key (prescription_id),
     constraint customer_id_fk foreign key (customer_id) references customers(customer_id),
     constraint medication_id_fk foreign key (medication_id) references medications(medication_id)
@@ -76,7 +76,7 @@ drop table if exists prescription_status;
 
 create or replace table prescription_status (
     prescription_id int(11) not null,
-    pharmacist_id int(11) not null,
+    pharmacist_id int(11),
     status varchar(255) not null,
     update_date timestamp not null default CURRENT_TIMESTAMP,
     -- primary key (prescription_id, update_date),
@@ -126,7 +126,7 @@ values
 
 -- Insert data into prescriptions table
 
-insert into prescriptions (customer_id, medication_id, dosage, refil_count, refil_frequency)
+insert into prescriptions (customer_id, medication_id, dosage, refill_count, refill_frequency)
 values 
     ((select customer_id from customers where first_name='Sarah' and last_name='Johnson'), 
      (select medication_id from medications where name='Aspirin'), 2, 3, 7),
