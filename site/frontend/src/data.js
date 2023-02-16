@@ -40,13 +40,13 @@ const rawData = `
     }
     ,{"type":"table","name":"prescriptions","database":"cs340_moncrief","data":
     [
-    {"prescription_id":"1","customer_id":"1","medication_id":"1","dosage":"2.00","refil_count":"3","refil_frequency":"7"},
-    {"prescription_id":"2","customer_id":"2","medication_id":"2","dosage":"3.00","refil_count":"2","refil_frequency":"14"},
-    {"prescription_id":"3","customer_id":"3","medication_id":"3","dosage":"1.00","refil_count":"5","refil_frequency":"30"},
-    {"prescription_id":"4","customer_id":"4","medication_id":"5","dosage":"99.99","refil_count":"2","refil_frequency":"30"},
-    {"prescription_id":"5","customer_id":"5","medication_id":"3","dosage":"99.99","refil_count":"3","refil_frequency":"45"},
-    {"prescription_id":"6","customer_id":"6","medication_id":"2","dosage":"99.99","refil_count":"0","refil_frequency":"0"},
-    {"prescription_id":"7","customer_id":"7","medication_id":"4","dosage":"5.00","refil_count":"1","refil_frequency":"60"}
+    {"prescription_id":"1","customer_id":"1","medication_id":"1","dosage":"2.00","refill_count":"3","refill_frequency":"7"},
+    {"prescription_id":"2","customer_id":"2","medication_id":"2","dosage":"3.00","refill_count":"2","refill_frequency":"14"},
+    {"prescription_id":"3","customer_id":"3","medication_id":"3","dosage":"1.00","refill_count":"5","refill_frequency":"30"},
+    {"prescription_id":"4","customer_id":"4","medication_id":"5","dosage":"99.99","refill_count":"2","refill_frequency":"30"},
+    {"prescription_id":"5","customer_id":"5","medication_id":"3","dosage":"99.99","refill_count":"3","refill_frequency":"45"},
+    {"prescription_id":"6","customer_id":"6","medication_id":"2","dosage":"99.99","refill_count":"0","refill_frequency":"0"},
+    {"prescription_id":"7","customer_id":"7","medication_id":"4","dosage":"5.00","refill_count":"1","refill_frequency":"60"}
     ]
     }
     ,{"type":"table","name":"prescription_status","database":"cs340_moncrief","data":
@@ -72,3 +72,16 @@ for (const d of parsed) {
         tables[d['name']] = d['data'].map(r => ({...r}));
     }
 }
+
+for (let prescription of tables['prescriptions']) {
+    prescription['related'] = {};
+    prescription['customer'] = tables['customers'].find(c => c['customer_id'] === prescription['customer_id']);
+    prescription['medication'] = tables['medications'].find(m => m['medication_id'] === prescription['medication_id']);
+    prescription['status'] = tables['prescription_status'].filter(ps => ps['prescription_id'] === prescription['prescription_id']);
+}
+
+for (let ps of tables['prescription_status']) {
+    ps['customer'] = tables['customers'].find(c => c['customer_id'] === ps['customer_id']);
+    ps['pharmacist'] = tables['pharmacists'].find(p => p['pharmacist_id'] === ps['pharmacist_id']);
+}
+

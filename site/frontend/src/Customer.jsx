@@ -106,7 +106,7 @@ export class CustomerView extends React.Component {
     render() {
         return (
             <div className="view">
-                <h1>Customers</h1>
+                <h1 className="display-3">Customers</h1>
                 <CustomerTable records={this.props.records} onEdit={record => this.handleEdit(record)} onAdd={() => this.setState({addPrompt: true})} />
                 {this.state.activeEditRecord === null ? null : <EditCustomer record={this.state.activeEditRecord} onChange={x => this.setState({ activeEditRecord : x})} />}
                 {this.state.addPrompt ? <CreateCustomer /> : null}

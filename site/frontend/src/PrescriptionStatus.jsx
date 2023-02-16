@@ -1,6 +1,20 @@
 import React, { useState, useEffect } from 'react';
 import { InputRow } from './InputRow.jsx';
 
+const statusOptions = {
+    'NULL': '-- select one --',
+    'pending': 'Pending',
+    'dropped_off': 'Dropped Off',
+    'filled': 'Filled',
+    'ready_for_pickup': 'Ready for Pickup',
+    'picked_up': 'Picked Up',
+};
+function formatStatus(status) {
+    if (statusOptions[status] === undefined) {
+        return 'NULL';
+    }
+    return statusOptions[status];
+}
 
 class PrescriptionStatus extends React.Component {
     constructor(props) {
@@ -13,8 +27,8 @@ class PrescriptionStatus extends React.Component {
         return (
             <tr className="prescription_status">
                 <td>{this.record['prescription_id']}</td>
-                <td>{this.record['pharmacist_id']}</td>
-                <td>{this.record['status']}</td>
+                <td>{this.record['pharmacist']['first_name']} {this.record['pharmacist']['last_name']}</td>
+                <td>{formatStatus(this.record['status'])}</td>
                 <td>{this.record['update_date']}</td>
             </tr>
         )
@@ -35,7 +49,10 @@ class PrescriptionStatusTable extends React.Component {
                 <table border="1" cellPadding="5">
                     <tbody>
                         <tr>
-                            {Object.keys(this.records[0]).map((title) => <th>{title}</th>)}
+                            <th>Prescription ID</th>
+                            <th>Pharmacist</th>
+                            <th>Status</th>
+                            <th>Update Date</th>
                         </tr>
                         {this.records.map((record) => <PrescriptionStatus record={record} />)}
                     </tbody>
@@ -60,7 +77,7 @@ export class PrescriptionStatusView extends React.Component {
     render() {
         return (
             <div className="view">
-                <h1>Prescription Status</h1>
+                <h1 className="display-3">Prescription Status</h1>
                 <PrescriptionStatusTable records={this.props.records} />
             </div>
         )
