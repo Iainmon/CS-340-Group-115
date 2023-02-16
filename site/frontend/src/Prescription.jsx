@@ -35,7 +35,7 @@ class Prescription extends React.Component {
                 <td><button className="btn btn-outline-info" onClick={() => this.props.onEdit(this.record)}>Edit</button></td>
                 <td></td>
                 <td>{this.record['prescription_id']}</td>
-                <td>{getStatus(this.record)['status']}</td>
+                <td>{formatStatus(getStatus(this.record)['status'])}</td>
                 <td>{getStatus(this.record)['update_date']}</td>
                 <td>{this.record['customer']['first_name']} {this.record['customer']['last_name']}</td>
                 <td>{this.record['medication']['name']}</td>
