@@ -35,7 +35,7 @@ class Prescription extends React.Component {
                 <td><button className="btn btn-outline-info" onClick={() => this.props.onEdit(this.record)}>Edit</button></td>
                 <td></td>
                 <td>{this.record['prescription_id']}</td>
-                <td>{getStatus(this.record)['status']}</td>
+                <td>{formatStatus(getStatus(this.record)['status'])}</td>
                 <td>{getStatus(this.record)['update_date']}</td>
                 <td>{this.record['customer']['first_name']} {this.record['customer']['last_name']}</td>
                 <td>{this.record['medication']['name']}</td>
@@ -107,7 +107,7 @@ function EditPrescription(props) {
                     onChange={e => {console.log(e.target.value);setPharmacist(e.target.value)}} />
 
             </fieldset>
-            <input type="submit" value="Submit" />
+            <input type="submit" className="btn btn-info" value="Update" />
         </form>
     );
 }
@@ -146,7 +146,7 @@ function CreatePrescription(props) {
                 <InputRow title="Refill Count" value={refillCount} onChange={e => setRefillCount(e.target.value)} />
                 <InputRow title="Refill Frequency" value={refillFrequency} onChange={e => setRefillFrequency(e.target.value)} />
             </fieldset>
-            <input type="submit" value="Submit" />
+            <input type="submit" className="btn btn-success" value="Create" />
         </form>
     );
 }
@@ -160,14 +160,14 @@ export class PrescriptionView extends React.Component {
 
     handleEdit(record) {
         console.log(record)
-        this.setState({ activeEditRecord: { ...record } });
+        this.setState({ activeEditRecord: { ...record }, addPrompt: false });
     }
 
     render() {
         return (
             <div className="view">
                 <h1 className="display-3">Prescriptions</h1>
-                <PrescriptionTable records={this.props.records} onEdit={record => this.handleEdit(record)} onAdd={() => this.setState({addPrompt: true})} />
+                <PrescriptionTable records={this.props.records} onEdit={record => this.handleEdit(record)} onAdd={() => this.setState({addPrompt: true, activeEditRecord: null})} />
                 {this.state.activeEditRecord === null ? null : <EditPrescription record={this.state.activeEditRecord} onChange={x => this.setState({ activeEditRecord : x})} />}
                 {this.state.addPrompt ? <CreatePrescription /> : null}
             </div>
