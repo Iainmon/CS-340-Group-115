@@ -1,0 +1,15 @@
+[
+{"type":"header","version":"5.2.0-1.el7.remi","comment":"Export to JSON plugin for PHPMyAdmin"},
+{"type":"database","name":"cs340_moncrief"},
+{"type":"table","name":"customers","database":"cs340_moncrief","data":
+[
+{"customer_id":"1","first_name":"Sarah","last_name":"Johnson","address":"111 Main St","phone_number":"555-555-1215"},
+{"customer_id":"2","first_name":"Michael","last_name":"Smith","address":"222 Elm St","phone_number":"555-555-1216"},
+{"customer_id":"3","first_name":"Emily","last_name":"Brown","address":"333 Oak St","phone_number":"555-555-1217"},
+{"customer_id":"4","first_name":"William","last_name":"Jones","address":"444 Main St","phone_number":"555-555-1218"},
+{"customer_id":"5","first_name":"Ashley","last_name":"Miller","address":"555 Elm St","phone_number":"555-555-1219"},
+{"customer_id":"6","first_name":"David","last_name":"Davis","address":"666 Oak St","phone_number":"555-555-1220"},
+{"customer_id":"7","first_name":"Bob","last_name":"Johnson","address":"420 Balze St","phone_number":"555-555-2222"}
+]
+}
+]
