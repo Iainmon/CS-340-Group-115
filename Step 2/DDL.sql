@@ -165,7 +165,5 @@ insert into prescription_status (prescription_id, pharmacist_id, status) values
  (select pharmacist_id from pharmacists where first_name = 'James' and last_name = 'Johnson'),
  'filled');
 
-
-
 SET FOREIGN_KEY_CHECKS=1;
 COMMIT;
