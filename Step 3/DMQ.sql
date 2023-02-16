@@ -17,7 +17,7 @@ select
     COALESCE(ps.update_date, NULL) as update_date,
     c.first_name as customer_first_name,
     c.last_name as customer_last_name,
-    m.name as medication_name,
+    m.medication_name as medication_name,
     p.dosage,
     p.refill_count,
     p.refill_frequency
@@ -64,7 +64,7 @@ values (:customer_id, :medication_id, :dosage, :refill_count, :refill_frequency)
 
 
 -- Creating medication
-insert into medications (name, description, quantity, stock, drug_class)
+insert into medications (medication_name, description, quantity, stock, drug_class)
 values (:name, :description, :quantity, :stock, :drug_class);
 
 
@@ -120,8 +120,6 @@ delete from pharmacists where pharmacist_id = :pharmacist_id;
 
 
 
-
-
 -- Get pharmacists for dropdown menu
 select pharmacist_id, CONCAT(first_name, ' ', last_name) as name from pharmacists;
 
@@ -129,5 +127,5 @@ select pharmacist_id, CONCAT(first_name, ' ', last_name) as name from pharmacist
 select customer_id, CONCAT(first_name, ' ', last_name) as name from customers;
 
 -- Get medications for dropdown menu
-select medication_id, CONCAT(name, ' ', quantity) from medications;
+select medication_id, CONCAT(medication_name, ' ', quantity) from medications;
 

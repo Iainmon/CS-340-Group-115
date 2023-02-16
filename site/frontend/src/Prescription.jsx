@@ -3,13 +3,13 @@ import { InputRow, ForeignKeySelectionRow, SelectionRow } from './InputRow.jsx';
 
 
 const statusOptions = {
-    'NULL': '-- select one --',
+    'NULL': 'NULL',
     'pending': 'Pending',
     'dropped_off': 'Dropped Off',
     'filled': 'Filled',
     'ready_for_pickup': 'Ready for Pickup',
     'picked_up': 'Picked Up',
-    'waiting_for_pickup': 'Awaiting Pickup',
+    'waiting_pickup': 'Waiting for Pickup',
 };
 
 function formatStatus(status) {
@@ -96,13 +96,14 @@ function EditPrescription(props) {
                 <InputRow title="Dosage" value={props.record['dosage']} onChange={e => props.onChange({...props.record, 'dosage': e.target.value})} />
                 <InputRow title="Refill Count" value={props.record['refill_count']} onChange={e => props.onChange({...props.record, 'refill_count': e.target.value})} />
                 <InputRow title="Refill Frequency" value={props.record['refill_frequency']} onChange={e => props.onChange({...props.record, 'refill_frequency': e.target.value})} />
-                <SelectionRow title="Status" value={getStatus(props.record)['status']} onChange={e => props.onChange({...props.record, 'status': props.record['status'] + [{'status':e.target.value,'update_date':getStatus(props.record)['update_date']}]})} pairs={statusOptions} />
+                <SelectionRow title="Status" value={getStatus(props.record)['status']} onChange={e => props.onChange({...props.record, 'status': props.record['status'] + [{'status':e.target.value,'update_date':getStatus(props.record)['update_date']}]})} pairs={{...statusOptions,'NULL':'(NULL) No Change'}} />
                 <ForeignKeySelectionRow
                     title="Pharmacist" 
                     value={pharmacist}
                     tableName="pharmacists"
                     searchKeyFunc={row => row['first_name'] + ' ' + row['last_name']}
                     foreignKey="pharmacist_id"
+                    additionalFields={{'NULL':'<No Pharmacist>'}}
                     onChange={e => {console.log(e.target.value);setPharmacist(e.target.value)}} />
 
             </fieldset>

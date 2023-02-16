@@ -42,7 +42,12 @@ class CustomerTable extends React.Component {
                                 <button className="btn btn-info" onClick={this.props.onAdd}>Add</button>
                             </th>
                             <th></th>
-                            {Object.keys(this.records[0]).map((title) => <th>{title}</th>)}
+                            {/* {Object.keys(this.records[0]).map((title) => <th>{title}</th>)} */}
+                            <th>Customer ID</th>
+                            <th>First Name</th>
+                            <th>Last Name</th>
+                            <th>Address</th>
+                            <th>Phone Number</th>
                         </tr>
                         {this.records.map((record) => <Customer record={record} onEdit={this.props.onEdit} />)}
                     </tbody>

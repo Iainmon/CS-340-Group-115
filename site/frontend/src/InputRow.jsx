@@ -24,6 +24,7 @@ export function SelectionRow({title, value, pairs, onChange}) {
             </div>
             <div className="col">
                 <select className="form-control" value={value} onChange={onChange}>
+                    <option value="" hidden>-- select option --</option>
                     {Object.entries(pairs).map(pair => <option value={pair[0]}>{pair[1]}</option>)}
                 </select>
             </div>
@@ -31,14 +32,14 @@ export function SelectionRow({title, value, pairs, onChange}) {
     );
 }
 
-export function ForeignKeySelectionRow({title, value, tableName, searchKeyFunc, foreignKey, onChange}) {
+export function ForeignKeySelectionRow({title, value, tableName, searchKeyFunc, foreignKey, onChange, additionalFields}) {
     return (
         <div className="row align-items-centercol-auto">
             <div className="col-3">
                 <label className="col-form-label">{title}</label>
             </div>
             <div className="col">
-                <ForeignKeySelect tables={tables} value={value} tableName={tableName} searchKeyFunc={searchKeyFunc} foreignKey={foreignKey} onChange={onChange} />
+                <ForeignKeySelect tables={tables} value={value} tableName={tableName} searchKeyFunc={searchKeyFunc} foreignKey={foreignKey} additionalFields={additionalFields} onChange={onChange} />
             </div>
         </div>
     );

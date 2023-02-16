@@ -43,7 +43,13 @@ class MedicationTable extends React.Component {
                                 <button className="btn btn-info" onClick={this.props.onAdd}>Add</button>
                             </th>
                             <th></th>
-                            {Object.keys(this.records[0]).map((title) => <th>{title}</th>)}
+                            {/* {Object.keys(this.records[0]).map((title) => <th>{title}</th>)} */}
+                            <th>Medication ID</th>
+                            <th>Name</th>
+                            <th>Description</th>
+                            <th>Quantity</th>
+                            <th>Stock</th>
+                            <th>Drug Class</th>
                         </tr>
                         {this.records.map((record) => <Medication record={record} onEdit={this.props.onEdit} />)}
                     </tbody>
