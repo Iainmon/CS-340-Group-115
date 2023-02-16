@@ -44,7 +44,7 @@ drop table if exists medications;
 
 create or replace table medications (
     medication_id int(11) not null unique AUTO_INCREMENT,
-    name varchar(255) not null,
+    medication_name varchar(255) not null,
     description varchar(255),
     quantity varchar(255) not null,                   -- Ex: 100mg, 1 tablet, 1 bottle
     stock int not null,
@@ -62,8 +62,8 @@ create or replace table prescriptions (
     customer_id int(11) not null,
     medication_id int(11) not null,
     dosage decimal(4,2) not null,
-    refil_count int,
-    refil_frequency int,
+    refill_count int,
+    refill_frequency int,
     primary key (prescription_id),
     constraint customer_id_fk foreign key (customer_id) references customers(customer_id),
     constraint medication_id_fk foreign key (medication_id) references medications(medication_id)
@@ -114,7 +114,7 @@ values
 
 -- Insert data into medications table
 
-insert into medications (name, description, quantity, stock, drug_class)
+insert into medications (medication_name, description, quantity, stock, drug_class)
 values 
     ('Aspirin', 'Pain reliever', '100mg', 200, 'NSAID'),
     ('Amoxicillin', 'Antibiotic', '250mg', 150, 'Penicillin'),
@@ -126,22 +126,22 @@ values
 
 -- Insert data into prescriptions table
 
-insert into prescriptions (customer_id, medication_id, dosage, refil_count, refil_frequency)
+insert into prescriptions (customer_id, medication_id, dosage, refill_count, refill_frequency)
 values 
     ((select customer_id from customers where first_name='Sarah' and last_name='Johnson'), 
-     (select medication_id from medications where name='Aspirin'), 2, 3, 7),
+     (select medication_id from medications where medication_name='Aspirin'), 2, 3, 7),
     ((select customer_id from customers where first_name='Michael' and last_name='Smith'), 
-     (select medication_id from medications where name='Amoxicillin'), 3, 2, 14),
+     (select medication_id from medications where medication_name='Amoxicillin'), 3, 2, 14),
     ((select customer_id from customers where first_name='Emily' and last_name='Brown'), 
-     (select medication_id from medications where name='Ibuprofen'), 1, 5, 30),
+     (select medication_id from medications where medication_name='Ibuprofen'), 1, 5, 30),
     ((select customer_id from customers where first_name = 'William' and last_name = 'Jones'),
-     (select medication_id from medications where name = 'Penicillin'), 500, 2, 30),
+     (select medication_id from medications where medication_name = 'Penicillin'), 500, 2, 30),
     ((select customer_id from customers where first_name = 'Ashley' and last_name = 'Miller'),
-     (select medication_id from medications where name = 'Ibuprofen'), 600, 3, 45),
+     (select medication_id from medications where medication_name = 'Ibuprofen'), 600, 3, 45),
     ((select customer_id from customers where first_name = 'David' and last_name = 'Davis'),
-     (select medication_id from medications where name = 'Amoxicillin'), 250, 0, 0),
+     (select medication_id from medications where medication_name = 'Amoxicillin'), 250, 0, 0),
     ((select customer_id from customers where first_name = 'Bob' and last_name = 'Johnson'),
-     (select medication_id from medications where name = 'Acetaminophen'), 5, 1, 60);
+     (select medication_id from medications where medication_name = 'Acetaminophen'), 5, 1, 60);
 
 -- Populating prescription_status table
 
@@ -149,19 +149,19 @@ insert into prescription_status (prescription_id, pharmacist_id, status) values
 ((select prescription_id from prescriptions where customer_id = (select customer_id from customers where first_name = 'Bob' and last_name = 'Johnson')),
  (select pharmacist_id from pharmacists where first_name = 'John' and last_name = 'Doe'),
  'filled'),
-((select prescription_id from prescriptions where customer_id = (select customer_id from customers where first_name = 'Emily' and last_name = 'Brown') and medication_id = (select medication_id from medications where name = 'Ibuprofen')),
+((select prescription_id from prescriptions where customer_id = (select customer_id from customers where first_name = 'Emily' and last_name = 'Brown') and medication_id = (select medication_id from medications where medication_name = 'Ibuprofen')),
  (select pharmacist_id from pharmacists where first_name = 'Jane' and last_name = 'Doe'),
  'waiting_pickup'),
 ((select prescription_id from prescriptions where customer_id = (select customer_id from customers where first_name = 'Ashley' and last_name = 'Miller')),
  (select pharmacist_id from pharmacists where first_name = 'Jim' and last_name = 'Smith'),
  'pending'),
-((select prescription_id from prescriptions where customer_id = (select customer_id from customers where first_name = 'Michael' and last_name = 'Smith') and medication_id = (select medication_id from medications where name = 'Amoxicillin')),
+((select prescription_id from prescriptions where customer_id = (select customer_id from customers where first_name = 'Michael' and last_name = 'Smith') and medication_id = (select medication_id from medications where medication_name = 'Amoxicillin')),
  (select pharmacist_id from pharmacists where first_name = 'James' and last_name = 'Johnson'),
  'filled'),
- ((select prescription_id from prescriptions where customer_id = (select customer_id from customers where first_name = 'Michael' and last_name = 'Smith') and medication_id = (select medication_id from medications where name = 'Amoxicillin')),
+ ((select prescription_id from prescriptions where customer_id = (select customer_id from customers where first_name = 'Michael' and last_name = 'Smith') and medication_id = (select medication_id from medications where medication_name = 'Amoxicillin')),
  (select pharmacist_id from pharmacists where first_name = 'Jane' and last_name = 'Doe'),
  'dropped_off'),
- ((select prescription_id from prescriptions where customer_id = (select customer_id from customers where first_name = 'Bob' and last_name = 'Johnson') and medication_id = (select medication_id from medications where name = 'Acetaminophen')),
+ ((select prescription_id from prescriptions where customer_id = (select customer_id from customers where first_name = 'Bob' and last_name = 'Johnson') and medication_id = (select medication_id from medications where medication_name = 'Acetaminophen')),
  (select pharmacist_id from pharmacists where first_name = 'James' and last_name = 'Johnson'),
  'filled');
 
