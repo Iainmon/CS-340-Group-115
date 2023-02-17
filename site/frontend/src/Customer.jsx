@@ -42,7 +42,12 @@ class CustomerTable extends React.Component {
                                 <button className="btn btn-info" onClick={this.props.onAdd}>Add</button>
                             </th>
                             <th></th>
-                            {Object.keys(this.records[0]).map((title) => <th>{title}</th>)}
+                            {/* {Object.keys(this.records[0]).map((title) => <th>{title}</th>)} */}
+                            <th>Customer ID</th>
+                            <th>First Name</th>
+                            <th>Last Name</th>
+                            <th>Address</th>
+                            <th>Phone Number</th>
                         </tr>
                         {this.records.map((record) => <Customer record={record} onEdit={this.props.onEdit} />)}
                     </tbody>
@@ -66,7 +71,7 @@ function EditCustomer(props) {
                 <InputRow title="Address" value={props.record['address']} onChange={e => props.onChange({...props.record, 'address': e.target.value})} />
                 <InputRow title="Phone Number" value={props.record['phone_number']} onChange={e => props.onChange({...props.record, 'phone_number': e.target.value})} />
             </fieldset>
-            <input type="submit" value="Submit" />
+            <input type="submit" className="btn btn-info" value="Update" />
         </form>
     );
 }
@@ -86,7 +91,7 @@ function CreateCustomer(props) {
                 <InputRow title="Address" value={address} onChange={e => setAddress(e.target.value)} />
                 <InputRow title="Phone Number" value={phoneNumber} onChange={e => setPhoneNumber(e.target.value)} />
             </fieldset>
-            <input type="submit" value="Submit" />
+            <input type="submit" className="btn btn-success" value="Create" />
         </form>
     );
 }
@@ -100,14 +105,14 @@ export class CustomerView extends React.Component {
 
     handleEdit(record) {
         console.log(record)
-        this.setState({ activeEditRecord: { ...record } });
+        this.setState({ activeEditRecord: { ...record }, addPrompt: false });
     }
 
     render() {
         return (
             <div className="view">
                 <h1 className="display-3">Customers</h1>
-                <CustomerTable records={this.props.records} onEdit={record => this.handleEdit(record)} onAdd={() => this.setState({addPrompt: true})} />
+                <CustomerTable records={this.props.records} onEdit={record => this.handleEdit(record)} onAdd={() => this.setState({addPrompt: true, activeEditRecord: null})} />
                 {this.state.activeEditRecord === null ? null : <EditCustomer record={this.state.activeEditRecord} onChange={x => this.setState({ activeEditRecord : x})} />}
                 {this.state.addPrompt ? <CreateCustomer /> : null}
             </div>

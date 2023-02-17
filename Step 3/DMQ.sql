@@ -123,6 +123,7 @@ update medications set
 where medication_id = :medication_id;
 delete from medications where medication_id = :medication_id
 
+
 -- Deleting prescription
 update prescription_status set
     prescription_id = null
