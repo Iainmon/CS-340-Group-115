@@ -1,5 +1,3 @@
-
-
 -- Populating pharmacists list
 select * from pharmacists;
 
@@ -17,7 +15,7 @@ select
     COALESCE(ps.update_date, NULL) as update_date,
     c.first_name as customer_first_name,
     c.last_name as customer_last_name,
-    m.name as medication_name,
+    m.medication_name as medication_name,
     p.dosage,
     p.refill_count,
     p.refill_frequency
@@ -43,11 +41,9 @@ select
     ph.first_name as pharmacist_first_name,
     ph.last_name as pharmacist_last_name,
     ps.update_date
-from prescription_status ps left join pharmacists ph on ps.pharmacist_id = ph.pharmacist_id
+from prescription_status ps 
+left join pharmacists ph on ps.pharmacist_id = ph.pharmacist_id
 order by ps.update_date desc;
-
-
-
 
 
 -- Creating pharmacist
@@ -64,10 +60,8 @@ values (:customer_id, :medication_id, :dosage, :refill_count, :refill_frequency)
 
 
 -- Creating medication
-insert into medications (name, description, quantity, stock, drug_class)
+insert into medications (medication_name, description, quantity, stock, drug_class)
 values (:name, :description, :quantity, :stock, :drug_class);
-
-
 
 
 -- Updating pharmacist
@@ -111,15 +105,29 @@ update medications set
 where medication_id = :medication_id;
 
 
-
 -- Deleting pharmacist
 update prescription_status set
     pharmacist_id = null
 where pharmacist_id = :pharmacist_id;
 delete from pharmacists where pharmacist_id = :pharmacist_id;
 
+-- Deleting customer
+update prescriptions set
+    customer_id = null
+where customer_id = :customer_id;
+delete from customers where customer_id = :customer_id
 
+-- Deleting medication
+update medications set
+    medication_id = null
+where medication_id = :medication_id;
+delete from medications where medication_id = :medication_id
 
+-- Deleting prescription
+update prescription_status set
+    prescription_id = null
+where prescription_id = :prescription_id;
+delete from prescriptions where prescription_id = :prescription_id
 
 
 -- Get pharmacists for dropdown menu
@@ -129,5 +137,5 @@ select pharmacist_id, CONCAT(first_name, ' ', last_name) as name from pharmacist
 select customer_id, CONCAT(first_name, ' ', last_name) as name from customers;
 
 -- Get medications for dropdown menu
-select medication_id, CONCAT(name, ' ', quantity) from medications;
+select medication_id, CONCAT(medication_name, ' ', quantity) from medications;
 
