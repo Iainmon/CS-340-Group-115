@@ -67,7 +67,7 @@ function EditPharmacist(props) {
     }
     const handleSubmit = async e => {
         
-        const response = await fetch(fetcher.backendURL + '/edit/pharmacist', {
+        const response = await fetch(fetcher.backendURL + '/edit/pharmacists', {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json'
