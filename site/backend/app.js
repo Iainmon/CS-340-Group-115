@@ -73,7 +73,7 @@ app.put('/edit/:tableName', async (req, res) => {
     const pkName = Object.keys(record).find(key => key.endsWith('_id'));
     const pkValue = record[pkName];
 
-    const template = 'UPDATE ?? SET ? WHERE ?.? = ?';
+    const template = 'UPDATE ?? SET ? WHERE ??.?? = ?';
     const params = [tableName, record, tableName, pkName, pkValue];
     const query = mysql.format(template, params);
 
