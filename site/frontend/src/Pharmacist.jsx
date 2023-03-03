@@ -100,8 +100,21 @@ function CreatePharmacist(pops) {
     const [address, setAddress] = useState('');
     const [phoneNumber, setPhoneNumber] = useState('');
 
+    const handleSubmit = async e => {
+        const record = { 'job_title': jobTitle, 'first_name': firstName, 'last_name': lastName, 'address': address, 'phone_number': phoneNumber };
+
+        const response = await fetch(fetcher.backendURL + '/add/pharmacists', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(record)
+        });
+        return response.json();
+    }
+
     return (
-        <form onSubmit={() => true}>
+        <form onSubmit={e => handleSubmit(e)}>
             <fieldset>
                 <legend>Create Pharmacist</legend>
                 <InputRow title="Job Title" value={jobTitle} onChange={e => setJobTitle(e.target.value)} />
@@ -127,7 +140,7 @@ function DeletePharmacist({record}) {
         });
         return response.json();
     }
-    
+
     return (
         <form onSubmit={e => handleSubmit(e)}>
             <div className="row">

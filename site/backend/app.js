@@ -89,6 +89,18 @@ app.put('/edit/:tableName', async (req, res) => {
     // res.send('Okay');
 });
 
+app.post('/add/:tableName', async (req, res) => {
+    const { tableName } = req.params;
+    const { ...record } = req.body;
+    const template = 'INSERT INTO ?? SET ?';
+    const params = [tableName, record];
+    const query = mysql.format(template, params);
+    console.log(query);
+    const results = await db.pool.asyncQuery(query);
+    console.log(results);
+    res.send(results);
+});
+
 app.delete('/delete/pharmacists', async (req, res) => {
     const { ...record } = req.body;
     const pharmacistId = record['pharmacist_id'];
