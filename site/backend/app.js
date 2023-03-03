@@ -80,6 +80,7 @@ app.put('/edit/:tableName', async (req, res) => {
 
 
     console.log('Table:', tableName);
+    console.log('Primary Key:', pkName, '=', pkValue);
     console.log('Record:', record);
     console.log(query);
     const results = await db.pool.asyncQuery(query);
