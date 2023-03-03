@@ -83,6 +83,7 @@ app.put('/edit/:tableName', async (req, res) => {
     console.log('Record:', record);
     console.log(query);
     const results = await db.pool.asyncQuery(query);
+    console.log(results);
     res.send(results);
     // res.send('Okay');
 });
