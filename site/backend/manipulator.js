@@ -19,7 +19,9 @@ const populate = async (tableName, pool) => {
 
     const results = await pool.asyncQuery(query);
     console.log(results);
-    return results;
+    const rows = results.results.map(row => ({...row}));
+    console.log(rows);
+    return rows;
 
 }
 
