@@ -12,7 +12,8 @@ const { populate } = require('./manipulator');
 
 // app.use(express.json());            // This is needed to parse JSON bodies
 // app.use(express.urlencoded());      // This is needed to parse URL-encoded bodies
-app.use('/web',express.static(__dirname + '../frontend/dist'));  // This is needed to serve static files
+app.use('/web',express.static('/nfs/stak/users/moncrief/CS-340-Group-115/site/frontend/dist'));  // This is needed to serve static files
+
 // hell0 
 // app.use((req, res, next) => {
 //     res.header('Access-Control-Allow-Origin', '*');
