@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { InputRow } from './InputRow.jsx';
+import * as fetcher from './fetcher.js';
 
 
 class Pharmacist extends React.Component {
@@ -64,8 +65,21 @@ function EditPharmacist(props) {
     if (props.record === null) {
         return (<b>Please select a pharmacist to edit!</b>);
     }
+    const handleSubmit = async e => {
+        
+        const response = await fetch(fetcher.backendURL + '/edit/pharmacist', {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(props.record)
+        });
+        return response.json();
+
+    }
+
     return (
-        <form onSubmit={() => true}>
+        <form onSubmit={e => handleSubmit(e)}>
             <fieldset>
                 <legend>Edit Pharmacist</legend>
                 <InputRow title="First Name" value={props.record['first_name']} onChange={e => props.onChange({...props.record, 'first_name': e.target.value})} />

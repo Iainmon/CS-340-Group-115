@@ -10,7 +10,7 @@ PORT        = 2235;                 // Set a port number at the top so it's easy
 var db = require('./db-connector');
 const { populate } = require('./manipulator');
 
-// app.use(express.json());            // This is needed to parse JSON bodies
+app.use(express.json());            // This is needed to parse JSON bodies
 // app.use(express.urlencoded());      // This is needed to parse URL-encoded bodies
 app.use('/web',express.static('/nfs/stak/users/moncrief/CS-340-Group-115/site/frontend/dist'));  // This is needed to serve static files
 
@@ -63,6 +63,21 @@ app.get('/populate/:tableName', async (req, res) => {
     res.send(results);
 });
 
+
+app.put('/edit/:tableName', async (req, res) => {
+    const { tableName } = req.params;
+    const { id, ...changes } = req.body;
+    const template = 'UPDATE ?? SET ? WHERE id = ?';
+    const params = [tableName, changes, id];
+    const query = mysql.format(template, params);
+    // const results = await db.pool.asyncQuery(query);
+    // res.send(results);
+    console.log('Table:', tableName);
+    console.log('Change:', id, changes);
+    console.log(query);
+
+    res.send('Okay');
+});
 
     app.listen(PORT, function(){            // This is the basic syntax for what is called the 'listener' which receives incoming requests on the specified PORT.
         console.log('Express started on http://localhost:' + PORT + '; press Ctrl-C to terminate.')

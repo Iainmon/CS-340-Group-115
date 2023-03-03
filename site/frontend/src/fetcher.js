@@ -1,7 +1,7 @@
 import { tables } from './data.js';
 
 const port = 2235;
-const backendURL = 'http://flip1.engr.oregonstate.edu:' + port;
+export const backendURL = 'http://flip1.engr.oregonstate.edu:' + port;
 
 export async function primeTables() {
     console.log('Fetching tables...');
