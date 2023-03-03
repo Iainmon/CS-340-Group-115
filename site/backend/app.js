@@ -4,7 +4,7 @@
 // Express
 var express = require('express');   // We are using the express library for the web server
 var app     = express();            // We need to instantiate an express object to interact with the server in our code
-PORT        = 2236;                 // Set a port number at the top so it's easy to change in the future
+PORT        = 2235;                 // Set a port number at the top so it's easy to change in the future
 
 // Database
 var db = require('./db-connector');
@@ -44,10 +44,10 @@ app.get('/', function(req, res)
     });
 
 
-app.get('/get/:tableName', async (req, res) => {
+app.get('/populate/:tableName', async (req, res) => {
     const { tableName } = req.params;
-    const results = await db.pool.asyncQuery('SELECT * FROM ');
-    
+    const results = await populate(tableName, db.pool);
+    res.send(results);
 });
 
 
