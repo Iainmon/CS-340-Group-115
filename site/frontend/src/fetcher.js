@@ -1,4 +1,4 @@
-import { tables } from './data.js';
+import { tables,format } from './data.js';
 
 const port = 2235;
 export const backendURL = 'http://flip1.engr.oregonstate.edu:' + port;
@@ -20,6 +20,12 @@ export async function primeTables() {
     });
     const results = await Promise.all(promises);
     console.log(results);
+
+
+    console.log('Formatting tables...');
+    format();
+    console.log('Done formatting tables.');
+
 
     return results;
 }

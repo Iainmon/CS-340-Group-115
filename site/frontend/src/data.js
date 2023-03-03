@@ -72,16 +72,18 @@ for (const d of parsed) {
         tables[d['name']] = d['data'].map(r => ({...r}));
     }
 }
+export const format = () => {
+    for (let prescription of tables['prescriptions']) {
+        prescription['related'] = {};
+        prescription['customer'] = tables['customers'].find(c => c['customer_id'] === prescription['customer_id']);
+        prescription['medication'] = tables['medications'].find(m => m['medication_id'] === prescription['medication_id']);
+        prescription['status'] = tables['prescription_status'].filter(ps => ps['prescription_id'] === prescription['prescription_id']);
+    }
 
-for (let prescription of tables['prescriptions']) {
-    prescription['related'] = {};
-    prescription['customer'] = tables['customers'].find(c => c['customer_id'] === prescription['customer_id']);
-    prescription['medication'] = tables['medications'].find(m => m['medication_id'] === prescription['medication_id']);
-    prescription['status'] = tables['prescription_status'].filter(ps => ps['prescription_id'] === prescription['prescription_id']);
+    for (let ps of tables['prescription_status']) {
+        ps['customer'] = tables['customers'].find(c => c['customer_id'] === ps['customer_id']);
+        ps['pharmacist'] = tables['pharmacists'].find(p => p['pharmacist_id'] === ps['pharmacist_id']);
+    }
 }
 
-for (let ps of tables['prescription_status']) {
-    ps['customer'] = tables['customers'].find(c => c['customer_id'] === ps['customer_id']);
-    ps['pharmacist'] = tables['pharmacists'].find(p => p['pharmacist_id'] === ps['pharmacist_id']);
-}
-
+format();
