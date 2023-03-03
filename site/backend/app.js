@@ -10,7 +10,7 @@ PORT        = 2235;                 // Set a port number at the top so it's easy
 
 // Database
 var db = require('./db-connector');
-const { populate } = require('./manipulator');
+const { populate, create, update, deletePharmacist } = require('./manipulator');
 
 app.use(express.json());            // This is needed to parse JSON bodies
 // app.use(express.urlencoded());      // This is needed to parse URL-encoded bodies
@@ -73,53 +73,63 @@ app.put('/edit/:tableName', async (req, res) => {
     const pkName = Object.keys(record).find(key => key.endsWith('_id'));
     const pkValue = record[pkName];
 
-    const template = 'UPDATE ?? SET ? WHERE ??.?? = ?';
-    const params = [tableName, record, tableName, pkName, pkValue];
-    const query = mysql.format(template, params);
-
-
-
-    console.log('Table:', tableName);
-    console.log('Primary Key:', pkName, '=', pkValue);
-    console.log('Record:', record);
-    console.log(query);
-    const results = await db.pool.asyncQuery(query);
-    console.log(results);
+    const results = await update(tableName, pkName, pkValue, record, db.pool);
     res.send(results);
+
+
+    // const template = 'UPDATE ?? SET ? WHERE ??.?? = ?';
+    // const params = [tableName, record, tableName, pkName, pkValue];
+    // const query = mysql.format(template, params);
+
+
+
+    // console.log('Table:', tableName);
+    // console.log('Primary Key:', pkName, '=', pkValue);
+    // console.log('Record:', record);
+    // console.log(query);
+    // const results = await db.pool.asyncQuery(query);
+    // console.log(results);
     // res.send('Okay');
 });
 
 app.post('/add/:tableName', async (req, res) => {
+    // const { tableName } = req.params;
+    // const { ...record } = req.body;
+    // const template = 'INSERT INTO ?? SET ?';
+    // const params = [tableName, record];
+    // const query = mysql.format(template, params);
+    // console.log(query);
+    // const results = await db.pool.asyncQuery(query);
+    // console.log(results);
+    // res.send(results);
     const { tableName } = req.params;
     const { ...record } = req.body;
-    const template = 'INSERT INTO ?? SET ?';
-    const params = [tableName, record];
-    const query = mysql.format(template, params);
-    console.log(query);
-    const results = await db.pool.asyncQuery(query);
-    console.log(results);
+
+    const results = await create(tableName, record, db.pool);
     res.send(results);
 });
 
 app.delete('/delete/pharmacists', async (req, res) => {
     const { ...record } = req.body;
     const pharmacistId = record['pharmacist_id'];
+    const results = await deletePharmacist(pharmacistId, db.pool);
 
-    const template1 = 'update prescription_status set pharmacist_id = null where pharmacist_id = ?';
-    const template2 = 'delete from pharmacists where pharmacist_id = ?';
-    const params = [pharmacistId];
-    const query1 = mysql.format(template1, params);
-    const query2 = mysql.format(template2, params);
+    res.send(results);
 
-    console.log(query1);
-    console.log(query2);
+    // const template1 = 'update prescription_status set pharmacist_id = null where pharmacist_id = ?';
+    // const template2 = 'delete from pharmacists where pharmacist_id = ?';
+    // const params = [pharmacistId];
+    // const query1 = mysql.format(template1, params);
+    // const query2 = mysql.format(template2, params);
 
-    const results1 = await db.pool.asyncQuery(query1);
-    console.log(results1);
-    const results2 = await db.pool.asyncQuery(query2);
-    console.log(results2);
+    // console.log(query1);
+    // console.log(query2);
 
-    res.send({results1, results2});
+    // const results1 = await db.pool.asyncQuery(query1);
+    // console.log(results1);
+    // const results2 = await db.pool.asyncQuery(query2);
+    // console.log(results2);
+ 
 });
 
     app.listen(PORT, function(){            // This is the basic syntax for what is called the 'listener' which receives incoming requests on the specified PORT.
