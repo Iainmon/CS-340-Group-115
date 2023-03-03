@@ -78,13 +78,13 @@ app.put('/edit/:tableName', async (req, res) => {
     const query = mysql.format(template, params);
 
 
-    // const results = await db.pool.asyncQuery(query);
-    // res.send(results);
+
     console.log('Table:', tableName);
     console.log('Record:', record);
     console.log(query);
-
-    res.send('Okay');
+    const results = await db.pool.asyncQuery(query);
+    res.send(results);
+    // res.send('Okay');
 });
 
     app.listen(PORT, function(){            // This is the basic syntax for what is called the 'listener' which receives incoming requests on the specified PORT.
