@@ -83,6 +83,9 @@ export const format = () => {
     for (let ps of tables['prescription_status']) {
         ps['customer'] = tables['customers'].find(c => c['customer_id'] === ps['customer_id']);
         ps['pharmacist'] = tables['pharmacists'].find(p => p['pharmacist_id'] === ps['pharmacist_id']);
+        if (ps['pharmacist'] == undefined) {
+            ps['pharmacist'] = {first_name: 'NULL', last_name: ''};
+        }
     }
 }
 
