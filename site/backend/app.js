@@ -68,14 +68,20 @@ app.get('/populate/:tableName', async (req, res) => {
 
 app.put('/edit/:tableName', async (req, res) => {
     const { tableName } = req.params;
-    const { id, ...changes } = req.body;
-    const template = 'UPDATE ?? SET ? WHERE id = ?';
-    const params = [tableName, changes, id];
+    const { ...record } = req.body;
+
+    const pkName = Object.keys(record).find(key => key.endsWith('_id'));
+    const pkValue = record[pkName];
+
+    const template = 'UPDATE ?? SET ? WHERE ? = ?';
+    const params = [tableName, record, pkName, pkValue];
     const query = mysql.format(template, params);
+
+
     // const results = await db.pool.asyncQuery(query);
     // res.send(results);
     console.log('Table:', tableName);
-    console.log('Change:', id, changes);
+    console.log('Record:', record);
     console.log(query);
 
     res.send('Okay');
