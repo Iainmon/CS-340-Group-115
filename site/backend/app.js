@@ -89,6 +89,27 @@ app.put('/edit/:tableName', async (req, res) => {
     // res.send('Okay');
 });
 
+app.delete('/delete/pharmacists', async (req, res) => {
+    const { ...record } = req.body;
+    const pharmacistId = record['pharmacist_id'];
+
+    const template1 = 'update prescription_status set pharmacist_id = null where pharmacist_id = ?';
+    const template2 = 'delete from pharmacists where pharmacist_id = ?';
+    const params = [pharmacistId];
+    const query1 = mysql.format(template1, params);
+    const query2 = mysql.format(template2, params);
+
+    console.log(query1);
+    console.log(query2);
+
+    const results1 = await db.pool.asyncQuery(query1);
+    console.log(results1);
+    const results2 = await db.pool.asyncQuery(query2);
+    console.log(results2);
+
+    res.send({results1, results2});
+});
+
     app.listen(PORT, function(){            // This is the basic syntax for what is called the 'listener' which receives incoming requests on the specified PORT.
         console.log('Express started on http://localhost:' + PORT + '; press Ctrl-C to terminate.')
     });

@@ -116,8 +116,20 @@ function CreatePharmacist(pops) {
 }
 
 function DeletePharmacist({record}) {
+
+    const handleSubmit = async e => {
+        const response = await fetch(fetcher.backendURL + '/delete/pharmacists', {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(record)
+        });
+        return response.json();
+    }
+    
     return (
-        <form onSubmit={() => true}>
+        <form onSubmit={e => handleSubmit(e)}>
             <div className="row">
                 <div class="col-auto">
                     <label>Are you sure you want to delete {record['first_name']} {record['last_name']}?</label>
