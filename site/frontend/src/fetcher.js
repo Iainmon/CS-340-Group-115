@@ -8,6 +8,7 @@ export async function primeTables() {
     const promises = Object.keys(tables).map(async tableName => {
         const response = await fetch(backendURL + '/populate/' + tableName);
         const json = await response.json();
+        console.log('Fetched table:', tableName);
         console.log(json);
         tables[tableName] = json;
         return json;
