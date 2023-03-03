@@ -12,21 +12,11 @@ PORT        = 2235;                 // Set a port number at the top so it's easy
 var db = require('./db-connector');
 const { populate, create, update, deletePharmacist } = require('./manipulator');
 
-app.use(express.json());            // This is needed to parse JSON bodies
-// app.use(express.urlencoded());      // This is needed to parse URL-encoded bodies
-app.use('/web',express.static('/nfs/stak/users/moncrief/CS-340-Group-115/site/frontend/dist'));  // This is needed to serve static files
+// Add middleware to parse the POST body of requests and server static files
+app.use(express.json());
+app.use('/web',express.static('/nfs/stak/users/moncrief/CS-340-Group-115/site/frontend/dist'));
 
-// hell0 
-// app.use((req, res, next) => {
-//     res.header('Access-Control-Allow-Origin', '*');
-//     res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
-//     res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
-//     next();
-// });
-
-/*
-    ROUTES
-*/
+// Default homepage route. Tests database connection and returns results. (THis is just from assignment 1)
 app.get('/', function(req, res)
     {
         // Define our queries
@@ -59,6 +49,7 @@ app.get('/', function(req, res)
     });
 
 
+// Route to get all records from a table via specific table name and filters
 app.get('/populate/:tableName', async (req, res) => {
     const { tableName } = req.params;
     const results = await populate(tableName, db.pool);
@@ -66,42 +57,21 @@ app.get('/populate/:tableName', async (req, res) => {
 });
 
 
+// Route to add a record to a table via specific table name and record
 app.put('/edit/:tableName', async (req, res) => {
     const { tableName } = req.params;
     const { ...record } = req.body;
 
+    // Identify the primary key
     const pkName = Object.keys(record).find(key => key.endsWith('_id'));
     const pkValue = record[pkName];
 
     const results = await update(tableName, pkName, pkValue, record, db.pool);
     res.send(results);
-
-
-    // const template = 'UPDATE ?? SET ? WHERE ??.?? = ?';
-    // const params = [tableName, record, tableName, pkName, pkValue];
-    // const query = mysql.format(template, params);
-
-
-
-    // console.log('Table:', tableName);
-    // console.log('Primary Key:', pkName, '=', pkValue);
-    // console.log('Record:', record);
-    // console.log(query);
-    // const results = await db.pool.asyncQuery(query);
-    // console.log(results);
-    // res.send('Okay');
 });
 
+// Route to create a record to a table via specific table name and record
 app.post('/add/:tableName', async (req, res) => {
-    // const { tableName } = req.params;
-    // const { ...record } = req.body;
-    // const template = 'INSERT INTO ?? SET ?';
-    // const params = [tableName, record];
-    // const query = mysql.format(template, params);
-    // console.log(query);
-    // const results = await db.pool.asyncQuery(query);
-    // console.log(results);
-    // res.send(results);
     const { tableName } = req.params;
     const { ...record } = req.body;
 
@@ -109,29 +79,16 @@ app.post('/add/:tableName', async (req, res) => {
     res.send(results);
 });
 
+// Route to delete a pharmacist
 app.delete('/delete/pharmacists', async (req, res) => {
     const { ...record } = req.body;
     // const pharmacistId = record['pharmacist_id'];
     const results = await deletePharmacist(record, db.pool);
 
     res.send(results);
-
-    // const template1 = 'update prescription_status set pharmacist_id = null where pharmacist_id = ?';
-    // const template2 = 'delete from pharmacists where pharmacist_id = ?';
-    // const params = [pharmacistId];
-    // const query1 = mysql.format(template1, params);
-    // const query2 = mysql.format(template2, params);
-
-    // console.log(query1);
-    // console.log(query2);
-
-    // const results1 = await db.pool.asyncQuery(query1);
-    // console.log(results1);
-    // const results2 = await db.pool.asyncQuery(query2);
-    // console.log(results2);
- 
 });
 
-    app.listen(PORT, function(){            // This is the basic syntax for what is called the 'listener' which receives incoming requests on the specified PORT.
-        console.log('Express started on http://localhost:' + PORT + '; press Ctrl-C to terminate.')
-    });
+// Start the server
+app.listen(PORT, function(){
+    console.log('Express started on http://localhost:' + PORT + '; press Ctrl-C to terminate.')
+});
