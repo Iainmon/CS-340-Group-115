@@ -8,6 +8,7 @@ PORT        = 2235;                 // Set a port number at the top so it's easy
 
 // Database
 var db = require('./db-connector');
+const { populate } = require('./manipulator');
 
 /*
     ROUTES
