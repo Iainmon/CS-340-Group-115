@@ -3,6 +3,7 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.min.js';
+import { primeTables } from './fetcher.js';
 
 import { App } from './App.jsx';
 
@@ -22,7 +23,8 @@ import { App } from './App.jsx';
 // const root = ReactDOM.createRoot(document.getElementById('root'));
 // root.render(<h1>Hello, world! iainj</h1>);
 
-window.dispatch = view => {
+window.dispatch = async view => {
+  await primeTables();
   const root = ReactDOM.createRoot(document.getElementById('root'));
   root.render(<App name={view} />);
 }
