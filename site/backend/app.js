@@ -10,6 +10,9 @@ PORT        = 2235;                 // Set a port number at the top so it's easy
 var db = require('./db-connector');
 const { populate } = require('./manipulator');
 
+app.use(express.json());            // This is needed to parse JSON bodies
+app.use(express.urlencoded());      // This is needed to parse URL-encoded bodies
+app.use('/web',express.static(__dirname + '../frontend/dist'));  // This is needed to serve static files
 
 app.use((req, res, next) => {
     res.header('Access-Control-Allow-Origin', '*');
