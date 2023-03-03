@@ -111,8 +111,8 @@ app.post('/add/:tableName', async (req, res) => {
 
 app.delete('/delete/pharmacists', async (req, res) => {
     const { ...record } = req.body;
-    const pharmacistId = record['pharmacist_id'];
-    const results = await deletePharmacist(pharmacistId, db.pool);
+    // const pharmacistId = record['pharmacist_id'];
+    const results = await deletePharmacist(record, db.pool);
 
     res.send(results);
 
