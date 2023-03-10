@@ -62,8 +62,23 @@ function EditCustomer(props) {
     if (props.record === null) {
         return (<b>Please select a customer to edit!</b>);
     }
+
+    const handleSubmit = async e => {
+        // e.preventDefault();
+        
+        const response = await fetch(fetcher.backendURL + '/edit/customers', {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(props.record)
+        });
+        return response.json();
+
+    }
+
     return (
-        <form onSubmit={() => true}>
+        <form onSubmit={e => handleSubmit(e)}>
             <fieldset>
                 <legend>Edit Customer</legend>
                 <InputRow title="First Name" value={props.record['first_name']} onChange={e => props.onChange({...props.record, 'first_name': e.target.value})} />
@@ -82,8 +97,22 @@ function CreateCustomer(props) {
     const [address, setAddress] = useState('');
     const [phoneNumber, setPhoneNumber] = useState('');
 
+    const handleSubmit = async e => {
+        const record = { 'first_name': firstName, 'last_name': lastName, 'address': address, 'phone_number': phoneNumber };
+
+        const response = await fetch(fetcher.backendURL + '/add/customers', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(record)
+        });
+        return response.json();
+    }
+
+
     return (
-        <form onSubmit={() => true}>
+        <form onSubmit={e => handleSubmit(e)}>
             <fieldset>
                 <legend>Create Customer</legend>
                 <InputRow title="First Name" value={firstName} onChange={e => setFirstName(e.target.value)} />
