@@ -49,9 +49,13 @@ app.get('/', function(req, res)
     });
 
 
+
 // Route to get all records from a table via specific table name and filters
 app.get('/populate/:tableName', async (req, res) => {
     const { tableName } = req.params;
+
+    console.log('[populate]:', { tableName });
+
     const results = await populate(tableName, db.pool);
     res.send(results);
 });
@@ -61,6 +65,8 @@ app.get('/populate/:tableName', async (req, res) => {
 app.put('/edit/:tableName', async (req, res) => {
     const { tableName } = req.params;
     const { ...record } = req.body;
+
+    console.log('[edit]:', { tableName, record });
 
     // Identify the primary key
     const pkName = Object.keys(record).find(key => key.endsWith('_id'));
@@ -74,6 +80,8 @@ app.put('/edit/:tableName', async (req, res) => {
 app.post('/add/:tableName', async (req, res) => {
     const { tableName } = req.params;
     const { ...record } = req.body;
+
+    console.log('[add]:', { tableName, record });
 
     const results = await create(tableName, record, db.pool);
     res.send(results);
