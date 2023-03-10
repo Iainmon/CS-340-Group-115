@@ -40,7 +40,7 @@ class Prescription extends React.Component {
                 <td>{formatStatus(getStatus(this.record)['status'])}</td>
                 <td>{getStatus(this.record)['update_date']}</td>
                 <td>{this.record['customer']['first_name']} {this.record['customer']['last_name']}</td>
-                <td>{this.record['medication']['name']}</td>
+                <td>{this.record['medication']['medication_name']}</td>
                 <td>{this.record['dosage']}</td>
                 <td>{this.record['refill_count']}</td>
                 <td>{this.record['refill_frequency']}</td>
@@ -179,7 +179,7 @@ function CreatePrescription(props) {
                 <ForeignKeySelectionRow
                     title="Medication"
                     tableName="medications"
-                    searchKeyFunc={row => row['name'] + ' ' + row['quantity']}
+                    searchKeyFunc={row => row['medication_name'] + ' ' + row['quantity']}
                     foreignKey="medication_id"
                     onChange={e => { setMedicationId(e.target.value); console.log(e.target.value)}} />
 

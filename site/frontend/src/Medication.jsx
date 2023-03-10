@@ -17,7 +17,7 @@ class Medication extends React.Component {
                 <td><button className="btn btn-outline-info" onClick={() => this.props.onEdit(this.record)}>Edit</button></td>
                 <td></td>
                 <td>{this.record['medication_id']}</td>
-                <td>{this.record['name']}</td>
+                <td>{this.record['medication_name']}</td>
                 <td>{this.record['description']}</td>
                 <td>{this.record['quantity']}</td>
                 <td>{this.record['stock']}</td>
@@ -85,7 +85,7 @@ function EditMedication(props) {
         <form onSubmit={e => handleSubmit(e)}>
             <fieldset>
                 <legend>Edit Medications</legend>
-                <InputRow title="Name " value={props.record['name']} onChange={e => props.onChange({...props.record, 'name': e.target.value})} />
+                <InputRow title="Name " value={props.record['medication_name']} onChange={e => props.onChange({...props.record, 'medication_name': e.target.value})} />
                 <InputRow title="Description " value={props.record['description']} onChange={e => props.onChange({...props.record, 'description': e.target.value})} />
                 <InputRow title="Quantity " value={props.record['quantity']} onChange={e => props.onChange({...props.record, 'quantity': e.target.value})} />
                 <InputRow title="Stock " value={props.record['stock']} onChange={e => props.onChange({...props.record, 'stock': e.target.value})} />
@@ -106,7 +106,7 @@ function CreateMedication(props) {
 
     const handleSubmit = async e => {
         e.preventDefault();
-        const record = { 'name': name, 'description': description, 'quantity': quantity, 'stock': stock, 'drug_class': drug_class };
+        const record = { 'medication_name': name, 'description': description, 'quantity': quantity, 'stock': stock, 'drug_class': drug_class };
 
         const response = await fetch(fetcher.backendURL + '/add/medications', {
             method: 'POST',
