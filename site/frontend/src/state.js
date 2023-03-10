@@ -9,7 +9,6 @@ export async function reloadView(view) {
         console.error('No view state modifier defined.');
     }
     await fetcher.primeTables();
-    state.viewStateModifier('home');
     state.viewStateModifier(view);
     console.log('Reloaded view:', view);
 

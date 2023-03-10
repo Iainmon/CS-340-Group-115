@@ -6,6 +6,7 @@ import 'bootstrap/dist/js/bootstrap.min.js';
 import { primeTables } from './fetcher.js';
 
 import { App } from './App.jsx';
+import { state } from './state.js'
 
 // ReactDOM.render(
 //     <h1>Hello World</h1>,
@@ -23,10 +24,14 @@ import { App } from './App.jsx';
 // const root = ReactDOM.createRoot(document.getElementById('root'));
 // root.render(<h1>Hello, world! iainj</h1>);
 
+
 window.dispatch = async view => {
   await primeTables();
   const root = ReactDOM.createRoot(document.getElementById('root'));
   root.render(<App name={view} />);
+  state.viewStateModifier = v => {
+    root.render(<App name={v} />);
+  }
 }
 
 console.log('hello');
