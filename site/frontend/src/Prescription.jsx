@@ -95,15 +95,15 @@ function EditPrescription(props) {
 
     const handleSubmit = async e => {
         e.preventDefault();
-        console.log(props.record);
-        console.log(getStatus(props.record)['status']);
+        // console.log(props.record);
+        // console.log(getStatus(props.record)['status']);
         
         const response = await fetch(fetcher.backendURL + '/edit/prescriptions', {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ ...props.record, pharmacist: { pharmacist_id: pharmacist }})
+            body: JSON.stringify({ ...props.record, pharmacist: { pharmacist_id: pharmacist }, status: props.myStatus | null })
         });
         console.log(response.json());
         setComeBack('prescriptions');
