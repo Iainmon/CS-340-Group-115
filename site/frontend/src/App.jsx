@@ -44,7 +44,7 @@ export function App (props) {
     }
 
     const [activePage, setActivePage] = useState('home');
-    state.viewStateModifier = setActivePage;
+    state.viewStateModifier = (v) => setActivePage(v);
 
     const homePage = (
       <div className="container home">
