@@ -61,7 +61,7 @@ app.get('/populate/:tableName', async (req, res) => {
 });
 
 
-// Route to add a record to a table via specific table name and record
+// Route to add a record to a table via specific table name and record.
 app.put('/edit/:tableName', async (req, res) => {
     const { tableName } = req.params;
     const { ...record } = req.body;
@@ -76,7 +76,7 @@ app.put('/edit/:tableName', async (req, res) => {
     res.send(results);
 });
 
-// Route to create a record to a table via specific table name and record
+// Route to create a record to a table via specific table name and record.
 app.post('/add/:tableName', async (req, res) => {
     const { tableName } = req.params;
     const { ...record } = req.body;

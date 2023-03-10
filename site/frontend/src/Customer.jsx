@@ -64,7 +64,7 @@ function EditCustomer(props) {
     }
 
     const handleSubmit = async e => {
-        // e.preventDefault();
+        e.preventDefault();
         
         const response = await fetch(fetcher.backendURL + '/edit/customers', {
             method: 'PUT',
@@ -98,6 +98,7 @@ function CreateCustomer(props) {
     const [phoneNumber, setPhoneNumber] = useState('');
 
     const handleSubmit = async e => {
+        e.preventDefault();
         const record = { 'first_name': firstName, 'last_name': lastName, 'address': address, 'phone_number': phoneNumber };
 
         const response = await fetch(fetcher.backendURL + '/add/customers', {

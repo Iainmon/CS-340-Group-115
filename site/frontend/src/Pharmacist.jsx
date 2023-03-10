@@ -66,7 +66,7 @@ function EditPharmacist(props) {
         return (<b>Please select a pharmacist to edit!</b>);
     }
     const handleSubmit = async e => {
-        // e.preventDefault();
+        e.preventDefault();
         
         const response = await fetch(fetcher.backendURL + '/edit/pharmacists', {
             method: 'PUT',
