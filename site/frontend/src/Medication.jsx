@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { InputRow } from './InputRow.jsx';
 import { setComeBack } from './state.js';
+import * as fetcher from './fetcher.js';
 
 
 class Medication extends React.Component {
