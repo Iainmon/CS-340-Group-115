@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { InputRow } from './InputRow.jsx';
+import * as fetcher from './fetcher.js';
 
 
 class Customer extends React.Component {
