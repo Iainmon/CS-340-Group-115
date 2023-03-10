@@ -152,7 +152,7 @@ function CreatePrescription(props) {
 
     const handleSubmit = async e => {
         e.preventDefault();
-        const record = { 'dosage': dosage, 'refill_count': refillCount, 'refill_frequency': refillFrequency };
+        const record = { 'customer_id': customerId, 'medication_id': medicationId, dosage: dosage, 'refill_count': refillCount, 'refill_frequency': refillFrequency };
 
         const response = await fetch(fetcher.backendURL + '/add/prescriptions', {
             method: 'POST',
@@ -175,13 +175,13 @@ function CreatePrescription(props) {
                     tableName="customers" 
                     searchKeyFunc={row => row['first_name'] + ' ' + row['last_name']} 
                     foreignKey="customer_id" 
-                    onChange={e => console.log(e.target.value)} />
+                    onChange={e => {setCustomerId(e.target.value); console.log(e.target.value)}} />
                 <ForeignKeySelectionRow
                     title="Medication"
                     tableName="medications"
                     searchKeyFunc={row => row['name'] + ' ' + row['quantity']}
                     foreignKey="medication_id"
-                    onChange={e => console.log(e.target.value)} />
+                    onChange={e => { setMedicationId(e.target.value); console.log(e.target.value)}} />
 
                 {/* <SelectionRow title="Status" value={status} onChange={e => setStatus(e.target.value)} pairs={statusOptions} /> */}
 
