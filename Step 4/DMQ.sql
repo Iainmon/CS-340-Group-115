@@ -1,4 +1,6 @@
-
+-- Group 115
+-- Iain Moncrief
+-- Adam Gallina
 
 -- Populating pharmacists list
 select * from pharmacists;
