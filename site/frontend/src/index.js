@@ -31,6 +31,7 @@ window.dispatch = async view => {
   root.render(<App name={view} />);
   state.viewStateModifier = v => {
     root.render(<App name={v} />);
+    console.log('Tried to render:', v);
   }
 }
 
