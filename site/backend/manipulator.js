@@ -37,7 +37,8 @@ const create = async (tableName, record, pool) => {
     const template = 'INSERT INTO ?? SET ?';
     const params = [tableName, record];
     const query = mysql.format(template, params);
-    console.log(query);
+    console.log('[database][create]: Table: ', tableName);
+    console.log('[database][create]:', query);
 
     // Execute the query
     const results = await pool.asyncQuery(query);
@@ -55,10 +56,10 @@ const update = async (tableName, pkName, pkValue, record, pool) => {
     const query = mysql.format(template, params);
 
     // Display information about the update (debug)
-    console.log('Table:', tableName);
-    console.log('Primary Key:', pkName, '=', pkValue);
-    console.log('Record:', record);
-    console.log(query);
+    console.log('[database][update]: Table:', tableName);
+    console.log('[database][update]: Primary Key:', pkName, '=', pkValue);
+    console.log('[database][update]: Record:', record);
+    console.log('[database][update]:', query);
 
     // Execute the query
     const results = await pool.asyncQuery(query);
