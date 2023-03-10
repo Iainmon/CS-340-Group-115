@@ -73,6 +73,12 @@ app.put('/edit/:tableName', async (req, res) => {
     const pkValue = record[pkName];
 
     const results = await update(tableName, pkName, pkValue, record, db.pool);
+
+    if (tableName == 'prescriptions') {
+        const pharmacistId = record['pharmacist']['pharmacist_id'];
+        console.log('pharmacistId:', pharmacistId);
+        // const results = await update('pharmacists', 'pharmacist_id', pharmacistId, record, db.pool);
+    }
     res.send(results);
 });
 
