@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { InputRow } from './InputRow.jsx';
 import * as fetcher from './fetcher.js';
+import { reloadView } from './state.js';
 
 
 class Pharmacist extends React.Component {
@@ -75,7 +76,8 @@ function EditPharmacist(props) {
             },
             body: JSON.stringify(props.record)
         });
-        return response.json();
+        console.log(response.json());
+        await reloadView('pharmacists');
 
     }
 
@@ -102,6 +104,8 @@ function CreatePharmacist(pops) {
     const [phoneNumber, setPhoneNumber] = useState('');
 
     const handleSubmit = async e => {
+        e.preventDefault();
+
         const record = { 'job_title': jobTitle, 'first_name': firstName, 'last_name': lastName, 'address': address, 'phone_number': phoneNumber };
 
         const response = await fetch(fetcher.backendURL + '/add/pharmacists', {
@@ -111,7 +115,9 @@ function CreatePharmacist(pops) {
             },
             body: JSON.stringify(record)
         });
-        return response.json();
+        
+        console.log(response.json());
+        await reloadView('pharmacists');
     }
 
     return (
@@ -132,6 +138,7 @@ function CreatePharmacist(pops) {
 function DeletePharmacist({record}) {
 
     const handleSubmit = async e => {
+        e.preventDefault();
         const response = await fetch(fetcher.backendURL + '/delete/pharmacists', {
             method: 'DELETE',
             headers: {
@@ -139,7 +146,9 @@ function DeletePharmacist({record}) {
             },
             body: JSON.stringify(record)
         });
-        return response.json();
+        console.log(response.json());
+        await reloadView('pharmacists');
+
     }
 
     return (

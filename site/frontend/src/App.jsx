@@ -10,6 +10,8 @@ import {
     Nav,
 } from 'react-bootstrap';
 
+import { state } from './state.js';
+
 function BasicExample() {
   return (
     <Nav
@@ -42,6 +44,7 @@ export function App (props) {
     }
 
     const [activePage, setActivePage] = useState('home');
+    state.viewStateModifier = setActivePage;
 
     const homePage = (
       <div className="container home">

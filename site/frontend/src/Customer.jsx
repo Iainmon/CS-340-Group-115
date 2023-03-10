@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { InputRow } from './InputRow.jsx';
 import * as fetcher from './fetcher.js';
-
+import { reloadView } from './state.js';
 
 class Customer extends React.Component {
     constructor(props) {
@@ -74,7 +74,9 @@ function EditCustomer(props) {
             },
             body: JSON.stringify(props.record)
         });
-        return response.json();
+        console.log(response.json());
+        await reloadView('pharmacists');
+
 
     }
 
@@ -109,7 +111,9 @@ function CreateCustomer(props) {
             },
             body: JSON.stringify(record)
         });
-        return response.json();
+        console.log(response.json());
+        await reloadView('pharmacists');
+
     }
 
 
