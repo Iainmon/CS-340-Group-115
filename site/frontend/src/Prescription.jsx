@@ -97,8 +97,12 @@ function EditPrescription(props) {
         e.preventDefault();
         // console.log(props.record);
         // console.log(getStatus(props.record)['status']);
-        props.record.status = props.record.myStatus | null;
-        
+        if (getStatus(props.record)['status'] === undefined) {
+            delete props.record.status;
+            props.record.status = props.record.myStatus;
+        }
+        delete props.record.myStatus;
+
         const response = await fetch(fetcher.backendURL + '/edit/prescriptions', {
             method: 'PUT',
             headers: {
