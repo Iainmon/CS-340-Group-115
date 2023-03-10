@@ -68,17 +68,28 @@ app.put('/edit/:tableName', async (req, res) => {
 
     console.log('[edit]:', { tableName, record });
 
+    const sanitize = record => {
+        if (tableName == 'prescriptions') {
+            console.log('status:', record.status)
+            return {
+                'prescription_id': record['prescription_id'],
+                'customer_id': record['customer_id'],
+                'medication_id': record['medication_id'],
+                'dosage': record['dosage'],
+                'refill_count': record['refill_count'],
+                'refill_frequency': record['refill_frequency']
+            };
+        }
+        return record;
+    }
+
     // Identify the primary key
     const pkName = Object.keys(record).find(key => key.endsWith('_id'));
     const pkValue = record[pkName];
 
     const results = await update(tableName, pkName, pkValue, record, db.pool);
 
-    if (tableName == 'prescriptions') {
-        const pharmacistId = record['pharmacist']['pharmacist_id'];
-        console.log('pharmacistId:', pharmacistId);
-        // const results = await update('pharmacists', 'pharmacist_id', pharmacistId, record, db.pool);
-    }
+
     res.send(results);
 });
 
