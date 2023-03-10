@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { InputRow } from './InputRow.jsx';
+import { setComeBack } from './state.js';
 
 
 class Medication extends React.Component {
@@ -64,8 +65,23 @@ function EditMedication(props) {
     if (props.record === null) {
         return (<b>Please select a pharmacist to edit!</b>);
     }
+
+    const handleSubmit = async e => {
+        e.preventDefault();
+        
+        const response = await fetch(fetcher.backendURL + '/edit/medications', {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(props.record)
+        });
+        console.log(response.json());
+        setComeBack('medications');
+    }
+
     return (
-        <form onSubmit={() => true}>
+        <form onSubmit={e => handleSubmit(e)}>
             <fieldset>
                 <legend>Edit Medications</legend>
                 <InputRow title="Name " value={props.record['name']} onChange={e => props.onChange({...props.record, 'name': e.target.value})} />
@@ -87,8 +103,24 @@ function CreateMedication(props) {
     const [stock, setStock] = useState('');
     const [drug_class, setDrugClass] = useState('');
 
+    const handleSubmit = async e => {
+        e.preventDefault();
+        const record = { 'name': name, 'description': description, 'quantity': quantity, 'stock': stock, 'drug_class': drug_class };
+
+        const response = await fetch(fetcher.backendURL + '/add/medications', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(record)
+        });
+        console.log(response.json());
+        setComeBack('medications');
+
+    }
+
     return (
-        <form onSubmit={() => true}>
+        <form onSubmit={e => handleSubmit(e)}>
             <fieldset>
                 <legend>Create Medication</legend>
                 <InputRow title="Name " value={name} onChange={e => setName(e.target.value)} />

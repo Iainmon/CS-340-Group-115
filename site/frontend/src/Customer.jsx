@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { InputRow } from './InputRow.jsx';
 import * as fetcher from './fetcher.js';
-import { reloadView, setComeBack } from './state.js';
+import { setComeBack } from './state.js';
 
 class Customer extends React.Component {
     constructor(props) {
@@ -76,8 +76,6 @@ function EditCustomer(props) {
         });
         console.log(response.json());
         setComeBack('customers');
-
-
     }
 
     return (

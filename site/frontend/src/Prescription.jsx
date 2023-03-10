@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { InputRow, ForeignKeySelectionRow, SelectionRow } from './InputRow.jsx';
+import { setComeBack } from './state.js';
 
 
 const statusOptions = {
@@ -89,8 +90,23 @@ function EditPrescription(props) {
     }
     const [pharmacist, setPharmacist] = useState(props.record['pharmacist_id'] | null);
     console.log(pharmacist);
+
+    const handleSubmit = async e => {
+        e.preventDefault();
+        
+        const response = await fetch(fetcher.backendURL + '/edit/prescriptions', {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ ...props.record, pharmacist: { pharmacist_id: pharmacist }})
+        });
+        console.log(response.json());
+        setComeBack('prescriptions');
+    }
+
     return (
-        <form onSubmit={() => true}>
+        <form onSubmit={e => handleSubmit(e)}>
             <fieldset>
                 <legend>Edit Prescription</legend>
                 <InputRow title="Dosage" value={props.record['dosage']} onChange={e => props.onChange({...props.record, 'dosage': e.target.value})} />
@@ -121,8 +137,24 @@ function CreatePrescription(props) {
     const [refillFrequency, setRefillFrequency] = useState('');
     const [status, setStatus] = useState('');
 
+    const handleSubmit = async e => {
+        e.preventDefault();
+        const record = { 'dosage': dosage, 'refill_count': refillCount, 'refill_frequency': refillFrequency };
+
+        const response = await fetch(fetcher.backendURL + '/add/prescriptions', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(record)
+        });
+        console.log(response.json());
+        setComeBack('prescriptions');
+
+    }
+
     return (
-        <form onSubmit={() => true}>
+        <form onSubmit={e => handleSubmit(e)}>
             <fieldset>
                 <legend>Add Prescription</legend>
                 <ForeignKeySelectionRow 
