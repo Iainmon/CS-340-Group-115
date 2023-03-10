@@ -91,6 +91,7 @@ function EditPrescription(props) {
     }
     const [pharmacist, setPharmacist] = useState(props.record['pharmacist_id'] | null);
     console.log(pharmacist);
+    console.log(getStatus(props.record)['status']);
 
     const handleSubmit = async e => {
         e.preventDefault();
