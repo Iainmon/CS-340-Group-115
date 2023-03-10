@@ -42,7 +42,7 @@ export function App (props) {
         console.table(table);
     }
 
-    const [activePage, setActivePage] = useState('home');
+    const [activePage, setActivePage] = useState(props.name);
 
     const homePage = (
       <div className="container home">

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { InputRow } from './InputRow.jsx';
 import * as fetcher from './fetcher.js';
-import { reloadView } from './state.js';
+import { reloadView, setComeBack } from './state.js';
 
 
 class Pharmacist extends React.Component {
@@ -77,7 +77,7 @@ function EditPharmacist(props) {
             body: JSON.stringify(props.record)
         });
         console.log(response.json());
-        await reloadView('pharmacists');
+        setComeBack('pharmacists');
 
     }
 
@@ -115,9 +115,9 @@ function CreatePharmacist(pops) {
             },
             body: JSON.stringify(record)
         });
-        
+
         console.log(response.json());
-        await reloadView('pharmacists');
+        setComeBack('pharmacists');
     }
 
     return (
@@ -147,7 +147,7 @@ function DeletePharmacist({record}) {
             body: JSON.stringify(record)
         });
         console.log(response.json());
-        await reloadView('pharmacists');
+        setComeBack('pharmacists');
 
     }
 

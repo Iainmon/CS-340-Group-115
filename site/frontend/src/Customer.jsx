@@ -75,7 +75,7 @@ function EditCustomer(props) {
             body: JSON.stringify(props.record)
         });
         console.log(response.json());
-        await reloadView('customers');
+        setComeBack('customers');
 
 
     }
@@ -112,7 +112,7 @@ function CreateCustomer(props) {
             body: JSON.stringify(record)
         });
         console.log(response.json());
-        await reloadView('customers');
+        setComeBack('customers');
 
     }
 
