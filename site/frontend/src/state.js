@@ -7,6 +7,7 @@ export const state = {
 
 export function setComeBack(view) {
     store.set('view', view);
+    location.reload();
 }
 
 export function getComeBack() {
