@@ -23,7 +23,7 @@ export function SelectionRow({title, value, pairs, onChange}) {
                 <label className="col-form-label">{title}</label>
             </div>
             <div className="col">
-                <select className="form-control" value={value} onChange={onChange}>
+                <select className="form-control" value={value} onChange={e => onChange(e)}>
                     <option value="" hidden>-- select option --</option>
                     {Object.entries(pairs).map(pair => <option value={pair[0]}>{pair[1]}</option>)}
                 </select>
