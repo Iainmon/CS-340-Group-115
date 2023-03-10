@@ -97,13 +97,14 @@ function EditPrescription(props) {
         e.preventDefault();
         // console.log(props.record);
         // console.log(getStatus(props.record)['status']);
+        props.record.status = props.record.myStatus | null;
         
         const response = await fetch(fetcher.backendURL + '/edit/prescriptions', {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ ...props.record, pharmacist: { pharmacist_id: pharmacist }, status: props.record.myStatus | null })
+            body: JSON.stringify({ ...props.record, pharmacist: { pharmacist_id: pharmacist } })
         });
         console.log(response.json());
         setComeBack('prescriptions');

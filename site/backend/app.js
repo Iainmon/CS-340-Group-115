@@ -70,7 +70,7 @@ app.put('/edit/:tableName', async (req, res) => {
 
     const sanitize = record => {
         if (tableName == 'prescriptions') {
-            console.log('status:', record.status)
+            console.log('status:', record.status);
             return {
                 'prescription_id': record['prescription_id'],
                 'customer_id': record['customer_id'],
