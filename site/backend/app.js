@@ -64,23 +64,30 @@ app.get('/populate/:tableName', async (req, res) => {
 // Route to add a record to a table via specific table name and record.
 app.put('/edit/:tableName', async (req, res) => {
     const { tableName } = req.params;
-    const { ...record } = req.body;
+    let { ...record } = req.body;
 
     console.log('[edit]:', { tableName, record });
 
-    const sanitize = record => {
-        if (tableName == 'prescriptions') {
-            console.log('status:', record.status);
-            return {
+
+    if (tableName == 'prescriptions') {
+        if (!!record['status'] && !!record['pharmacist_id']) {
+            const statusRecord = { 
                 'prescription_id': record['prescription_id'],
-                'customer_id': record['customer_id'],
-                'medication_id': record['medication_id'],
-                'dosage': record['dosage'],
-                'refill_count': record['refill_count'],
-                'refill_frequency': record['refill_frequency']
+                'pharmacist_id': record['pharmacist_id'],
+                'status': record['status']
             };
+    
+            await create('prescription_status', statusRecord, db.pool);
         }
-        return record;
+
+        record = {
+            'prescription_id': record['prescription_id'],
+            'customer_id': record['customer_id'],
+            'medication_id': record['medication_id'],
+            'dosage': record['dosage'],
+            'refill_count': record['refill_count'],
+            'refill_frequency': record['refill_frequency']
+        };
     }
 
     // Identify the primary key

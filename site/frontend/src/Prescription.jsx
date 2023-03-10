@@ -108,7 +108,7 @@ function EditPrescription(props) {
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ ...props.record, pharmacist: { pharmacist_id: pharmacist } })
+            body: JSON.stringify({ ...props.record, 'pharmacist_id': pharmacist })
         });
         console.log(response.json());
         setComeBack('prescriptions');
