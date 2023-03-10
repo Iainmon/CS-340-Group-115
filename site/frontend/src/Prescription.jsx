@@ -94,6 +94,7 @@ function EditPrescription(props) {
 
     const handleSubmit = async e => {
         e.preventDefault();
+        console.log(props.record);
         
         const response = await fetch(fetcher.backendURL + '/edit/prescriptions', {
             method: 'PUT',
